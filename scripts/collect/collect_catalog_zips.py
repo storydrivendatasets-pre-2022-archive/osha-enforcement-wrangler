@@ -7,6 +7,8 @@ Reads data/MANIFEST.yaml, and for each entry where autocollect==true, downloads 
   corresponding `url`
 
 """
+from sys import path as syspath; syspath.append('./scripts')
+
 from myutils import mylog, myinfo, mywarn, fetch_and_save
 
 from pathlib import Path
@@ -53,8 +55,7 @@ def main():
     myinfo(f"Fetched {len(catalog_urls)} catalog urls")
 
     for url in catalog_urls:
-        if 'accident' in url:
-            fetch_and_save(url, destpath(url))
+        fetch_and_save(url, destpath(url))
 
 if __name__ == '__main__':
     main()

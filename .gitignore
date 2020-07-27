@@ -1,6 +1,9 @@
 # Dan Nguyen's custom bashfoo
 *.egg-info
 
+unpacked.csvs/
+zips/
+
 # names for data collect folders that shouldn't be committed
 _drafts/
 junk/
