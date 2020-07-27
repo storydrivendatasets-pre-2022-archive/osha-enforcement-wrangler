@@ -8,5 +8,5 @@ help:
 ALL: clean
 
 
-clean: clean_sqlize
+clean:
 	@echo --- Cleaning stubs

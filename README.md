@@ -1,6 +1,6 @@
-# quickdataproject-template
+# OSHA Enforcement Data Catalog snapshotter
 
-**Dan's template for quickie data-wrangling projects**
 
-Basically like [pydataproject-template](https://github.com/dannguyen/pydataproject-template), but without Python library stuff. Because a lot of projects I'm just writing one-off shell and Python scripts
+Downloads all the CSVs found here:
 
+https://enforcedata.dol.gov/views/data_summary.php ([mirror](https://enforcedata.dol.gov/views/data_summary.php))
