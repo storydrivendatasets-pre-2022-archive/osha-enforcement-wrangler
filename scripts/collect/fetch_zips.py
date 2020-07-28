@@ -18,7 +18,7 @@ from lxml.html import fromstring as lxsoup
 from urllib.parse import urlparse
 
 CATALOG_URL = 'https://enforcedata.dol.gov/views/data_summary.php'
-DEST_DIR = Path('data', 'collected', 'osha',)
+DEST_DIR = Path('data', 'collected', 'osha', 'snapshots')
 
 
 def destpath(url):

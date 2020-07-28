@@ -9,14 +9,13 @@ ALL: clean
 
 
 
-collect: fetch_zips unpack_zips split_csvs
-	@echo 'this wont work'
+collect: fetch_zips unpack_zips stash_csvs
 
 
 
 
-split_csvs:
-	./scripts/collect/split_csvs.py
+stash_csvs:
+	./scripts/collect/stash_csvs.py
 
 
 unpack_zips:

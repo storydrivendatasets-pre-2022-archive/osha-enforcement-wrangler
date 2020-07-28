@@ -3,9 +3,15 @@
 """
 collect/unpack_zips.py
 
-Requires one argument, expects it to be a directory:
+Has an optional argument for src directory; by default, it takes the latest
+    directory in data/collected/osha/snapshots
 
-    ./collect/unpack_zips.py data/collected/zips/2020-07-27
+Unzips all zips into individual subdirs of data/collected/osha/snapshots/YYYY-MM-DD/unpacked/
+
+For unzipped filenames that have a number, e.g. 'osha_violation_event2.csv', they are
+unzipped as: 'osha_violation_event_2.csv'
+
+
 """
 from sys import path as syspath; syspath.append('./scripts')
 
@@ -16,7 +22,7 @@ import re
 from sys import argv
 from zipfile import ZipFile
 
-DATA_DIR = Path('data', 'collected', 'osha',)
+DATA_DIR = Path('data', 'collected', 'osha', 'snapshots')
 
 
 def main(srcdir, destdir):
@@ -30,8 +36,19 @@ def main(srcdir, destdir):
         zdir = destdir.joinpath(_zsub)
         zdir.mkdir(exist_ok=True, parents=True)
         z = ZipFile(zn)
-        for fname in z.namelist():
-            destpath = z.extract(fname, path=zdir)
+        for zi in z.filelist:
+            fname = zi.filename
+
+            # reindex the numerical part of a file, if it exists
+            if len(z.filelist) > 1:
+                rx = re.search(r'(.+?)(\d+)\.(\w+)$', fname)
+                if rx:
+                    rx = rx.groups()
+                    # we need to rename/renumber the file for its destpath
+                    fname = '{}-{}.{}'.format(rx[0], rx[1].rjust(3, '0'), rx[2])
+
+            destpath = zdir.joinpath(fname)
+            destpath.write_bytes(z.read(zi.filename))
             mylog(destpath, f"{existed_size(destpath)} bytes", label="Extracted")
 
 
