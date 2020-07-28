@@ -30,47 +30,55 @@ def main(srcdir, destdir):
     zipnames = list(srcdir.glob('*.zip'))
     myinfo(f"Found {len(zipnames)} zipfiles")
 
+    def dest_filename(fname):
+        rx = re.search(r'(.+?)(\d+)\.(\w+)$', fname)
+        if rx:
+            rx = rx.groups()
+            # we need to rename/renumber the file for its destpath
+            fname = '{}-{}.{}'.format(rx[0], rx[1].rjust(3, '0'), rx[2])
+        return fname
+
+
     for zn in zipnames:
         # we actually make a subdir for each zip file
         _zsub = re.search(r'(\w+)_\d{8}', zn.stem).groups()[0]
         zdir = destdir.joinpath(_zsub)
         zdir.mkdir(exist_ok=True, parents=True)
-        z = ZipFile(zn)
-        for zi in z.filelist:
-            fname = zi.filename
-
-            # reindex the numerical part of a file, if it exists
-            if len(z.filelist) > 1:
-                rx = re.search(r'(.+?)(\d+)\.(\w+)$', fname)
-                if rx:
-                    rx = rx.groups()
-                    # we need to rename/renumber the file for its destpath
-                    fname = '{}-{}.{}'.format(rx[0], rx[1].rjust(3, '0'), rx[2])
-
+        zfile = ZipFile(zn)
+        for zi in zfile.filelist:
+            zname = zi.filename
+            fname = dest_filename(zname) if len(zfile.filelist) > 1 else zname
             destpath = zdir.joinpath(fname)
-            destpath.write_bytes(z.read(zi.filename))
-            mylog(destpath, f"{existed_size(destpath)} bytes", label="Extracted")
+            destpath.write_bytes(zfile.read(zname))
+            mylog(destpath.name, destpath.parent, f"{existed_size(destpath)} bytes", label="Extracted")
 
 
+
+def get_latest_snapshot_dir():
+    # assume data/collected/2020-07-27 (i.e. latest dir) is the working
+    # directory
+    datadirs = [p for p in DATA_DIR.glob('*/zips/') if p.is_dir() and re.search(r'\d{4}-\d{2}-\d{2}', str(p))]
+    if not datadirs:
+        raise ValueError(f"Could not find any valid collected zip directories in {DATA_DIR}")
+    else:
+        srcdir = sorted(datadirs)[-1]
+        return srcdir
 
 
 if __name__ == '__main__':
     if len(argv) < 2:
-        # assume data/collected/2020-07-27 (i.e. latest dir) is the working
-        # directory
-        datadirs = [p for p in DATA_DIR.glob('*/zips/') if p.is_dir() and re.search(r'\d{4}-\d{2}-\d{2}', str(p))]
-        if not datadirs:
-            raise ValueError(f"Could not find any valid collected zip directories in {DATA_DIR}")
-        else:
-            srcdir = sorted(datadirs)[-1]
+        srcdir = get_latest_snapshot_dir()
     else:
         srcdir = Path(argv[1])
         if not srcdir.is_dir():
             raise ValueError(f"Expected 1st argument to be a directory: {srcdir}")
     myinfo(srcdir, label="Source dir")
 
-    datedir = srcdir.parent.name # srcdir is expected to be dest/to/foo/2020-07-20/zips
-    destdir = DATA_DIR.joinpath(datedir, 'unpacked')
+    # have to derive the target dir, i.e. "unpacked subdir"
+    # srcdir is expected to be something like snapshots/2020-07-01/zips
+    # so corresponding destdir is snapshots/2020-07-01/unpacked
+    datestr = srcdir.parent.name
+    destdir = DATA_DIR.joinpath(datestr, 'unpacked')
     myinfo(destdir, label="Unpacked destination")
 
     main(srcdir, destdir)

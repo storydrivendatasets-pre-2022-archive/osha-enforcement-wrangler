@@ -9,19 +9,19 @@ ALL: clean
 
 
 
-collect: fetch_zips unpack_zips stash_csvs
+collect: fetch unpack_zips stash
 
 
 
 
-stash_csvs:
+stash:
 	./scripts/collect/stash_csvs.py
 
 
 unpack_zips:
 	./scripts/collect/unpack_zips.py
 
-fetch_zips:
+fetch:
 	./scripts/collect/fetch_zips.py
 
 

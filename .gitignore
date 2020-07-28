@@ -3,6 +3,8 @@
 
 zips/
 unpacked/
+snapshots/
+stash/
 
 # names for data collect folders that shouldn't be committed
 _drafts/
