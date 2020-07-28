@@ -16,17 +16,13 @@ import re
 from sys import argv
 from zipfile import ZipFile
 
-DEST_DIR_MAIN = Path('data', 'collected', 'unpacked.csvs')
+DATA_DIR = Path('data', 'collected', 'osha',)
 
 
-def main(srcdir):
-    datedir = srcdir.name # srcdir is expected to be dest/to/foo/2020-07-20/
-    destdir = DEST_DIR_MAIN.joinpath(datedir)
-
-    myinfo(destdir, label="Unpacked directory")
+def main(srcdir, destdir):
 
     zipnames = list(srcdir.glob('*.zip'))
-    myinfo(f"Found {len(zipnames)}", srcdir)
+    myinfo(f"Found {len(zipnames)} zipfiles")
 
     for zn in zipnames:
         # we actually make a subdir for each zip file
@@ -42,7 +38,22 @@ def main(srcdir):
 
 
 if __name__ == '__main__':
-    src = Path(argv[1])
-    if not src.is_dir():
-        raise ValueError(f"Expected 1st argument to be a directory: {src}")
-    main(src)
+    if len(argv) < 2:
+        # assume data/collected/2020-07-27 (i.e. latest dir) is the working
+        # directory
+        datadirs = [p for p in DATA_DIR.glob('*/zips/') if p.is_dir() and re.search(r'\d{4}-\d{2}-\d{2}', str(p))]
+        if not datadirs:
+            raise ValueError(f"Could not find any valid collected zip directories in {DATA_DIR}")
+        else:
+            srcdir = sorted(datadirs)[-1]
+    else:
+        srcdir = Path(argv[1])
+        if not srcdir.is_dir():
+            raise ValueError(f"Expected 1st argument to be a directory: {srcdir}")
+    myinfo(srcdir, label="Source dir")
+
+    datedir = srcdir.parent.name # srcdir is expected to be dest/to/foo/2020-07-20/zips
+    destdir = DATA_DIR.joinpath(datedir, 'unpacked')
+    myinfo(destdir, label="Unpacked destination")
+
+    main(srcdir, destdir)

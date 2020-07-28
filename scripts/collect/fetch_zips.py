@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-collect_zips.py
+fetch_zips.py
 
 Reads data/MANIFEST.yaml, and for each entry where autocollect==true, downloads from the
   corresponding `url`
@@ -18,7 +18,7 @@ from lxml.html import fromstring as lxsoup
 from urllib.parse import urlparse
 
 CATALOG_URL = 'https://enforcedata.dol.gov/views/data_summary.php'
-DEST_DIR = Path('data', 'collected', 'zips')
+DEST_DIR = Path('data', 'collected', 'osha',)
 
 
 def destpath(url):
@@ -32,7 +32,7 @@ def destpath(url):
     upath = Path(urlparse(url).path)
     bname = upath.name
     yr, mth, day = re.search(r'(\d{4})(\d{2})(\d{2})', bname).groups()
-    return DEST_DIR.joinpath(f"{yr}-{mth}-{day}", bname)
+    return DEST_DIR.joinpath(f"{yr}-{mth}-{day}", 'zips',  bname)
 
 
 def fetch_catalog_urls():
