@@ -9,9 +9,15 @@ ALL: clean
 
 
 
+## compile phase
+
+collate_stash:
+	./scripts/compile/collate_stashes.py
+
+
+
+## collect phase
 collect: fetch unpack_zips stash
-
-
 
 
 stash:

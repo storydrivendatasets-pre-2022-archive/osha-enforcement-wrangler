@@ -130,7 +130,7 @@ def stash_glom(glom, glom_name, destdir, index_field=None):
 
 def main(main_srcdir, main_destdir):
     # destdir.mkdir(exist_ok=True, parents=True)
-    for datadir in [d for d in main_srcdir.glob('*') if d.is_dir()]:
+    for datadir in [d for d in main_srcdir.iterdir() if d.is_dir()]:
         glomname = datadir.name # e.g. "osha_accident" from collected/osha/snapshots/YYYY-MM-DD/unpacked/osha_accident
         cnames = list(datadir.glob('*.csv'))
 

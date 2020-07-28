@@ -6,6 +6,8 @@ unpacked/
 snapshots/
 stash/
 
+data/compiled
+
 # names for data collect folders that shouldn't be committed
 _drafts/
 junk/
