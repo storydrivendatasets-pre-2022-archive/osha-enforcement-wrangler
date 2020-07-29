@@ -24,14 +24,14 @@ from pathlib import Path
 import re
 
 STASH_DIR = Path('data', 'collected', 'osha', 'stash')
-DEST_DIR = Path('data', 'compiled', 'osha', 'raw')
+TARGET_DIR = Path('data', 'compiled', 'osha', 'raw')
 
 
 def main():
     data_dirs = sorted(d for d in STASH_DIR.iterdir() if d.is_dir())
     myinfo(f"{STASH_DIR}", f"{len(data_dirs)} data directories", label="Main stash dir")
 
-    DEST_DIR.mkdir(parents=True, exist_ok=True)
+    TARGET_DIR.mkdir(parents=True, exist_ok=True)
 
     # def init_csv(seriesname):
     #     """seriesname is a expected to be a string corresponding to
@@ -43,7 +43,7 @@ def main():
         src_paths = sorted(datadir.glob('*.csv'))
         myinfo(f"{datadir}", f"{len(src_paths)} files", label="Stash subdir")
 
-        destpath = DEST_DIR.joinpath(f'{datadir.name}.csv')
+        destpath = TARGET_DIR.joinpath(f'{datadir.name}.csv')
         destfile = open(destpath, 'w')
         dest = csv.writer(destfile)
 

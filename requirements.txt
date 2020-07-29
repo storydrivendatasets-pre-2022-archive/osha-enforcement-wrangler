@@ -1,7 +1,8 @@
 pytest
 PyYaml>=5.1
 requests>=2.0
-lxml
+apsw
 cssselect
+lxml
 rich
 tqdm

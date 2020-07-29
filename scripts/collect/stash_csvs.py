@@ -25,7 +25,7 @@ from pathlib import Path
 import re
 
 DATA_DIR = Path('data', 'collected', 'osha', 'snapshots')
-DEST_DIR = Path('data', 'collected', 'osha', 'stash')
+TARGET_DIR = Path('data', 'collected', 'osha', 'stash')
 
 # Number of rows to arbitrarily split a file by
 DEFAULT_SLICE_COUNT = 100000
@@ -76,14 +76,14 @@ def glom_csvs(csvnames):
                 yield row
 
 
-def stash_glom(glom, glom_name, destdir, index_field=None):
+def stash_glom(glom, glom_name, targetdir, index_field=None):
     """
     glom is an iteration of uniform dicts, e.g. from a bunch of similar CSV files
 
     glom_name is something like 'osha_accident_abstract'
 
     Files are written to:
-        destdir/glom_name/glom_name-0001.csv
+        targetdir/glom_name/glom_name-0001.csv
     """
     file_count = 0
     file_handler = None
@@ -111,7 +111,7 @@ def stash_glom(glom, glom_name, destdir, index_field=None):
         return newcsv
 
 
-    glomdir = destdir.joinpath(glom_name)
+    glomdir = targetdir.joinpath(glom_name)
     glomdir.mkdir(exist_ok=True, parents=True)
 
     for i, row in enumerate(glom):
@@ -128,8 +128,8 @@ def stash_glom(glom, glom_name, destdir, index_field=None):
 
 
 
-def main(main_srcdir, main_destdir):
-    # destdir.mkdir(exist_ok=True, parents=True)
+def main(main_srcdir, main_targetdir):
+    # targetdir.mkdir(exist_ok=True, parents=True)
     for datadir in [d for d in main_srcdir.iterdir() if d.is_dir()]:
         glomname = datadir.name # e.g. "osha_accident" from collected/osha/snapshots/YYYY-MM-DD/unpacked/osha_accident
         cnames = list(datadir.glob('*.csv'))
@@ -139,14 +139,14 @@ def main(main_srcdir, main_destdir):
             # e.g. unpacked/osha_accident_lookup2/osha_accident_lookup2.csv
             cn = cnames[0]
             myinfo(f"{cn}", f"only 1 file of {existed_size(cn)} bytes", label="Skipping glom")
-            cn_destpath = main_destdir.joinpath(glomname, cn.name)
+            cn_destpath = main_targetdir.joinpath(glomname, cn.name)
             cn_destpath.parent.mkdir(exist_ok=True, parents=True)
             cn_destpath.write_bytes(cn.read_bytes())
             mylog(cn_destpath, label="Wrote")
 
         else:
             glom = glom_csvs(cnames)
-            stash_glom(glom, glomname, main_destdir)
+            stash_glom(glom, glomname, main_targetdir)
 
 
 def get_latest_snapshot_dir():
@@ -168,6 +168,6 @@ if __name__ == '__main__':
             raise ValueError(f"Expected 1st argument to be a directory: {srcdir}")
 
     myinfo(srcdir, label="Source dir")
-    myinfo(DEST_DIR, label="Stash destination")
+    myinfo(TARGET_DIR, label="Stash destination")
 
-    main(srcdir, DEST_DIR)
+    main(srcdir, TARGET_DIR)

@@ -11,9 +11,18 @@ ALL: clean
 
 ## compile phase
 
-collate_stash:
-	./scripts/compile/collate_stashes.py
+compile_db:
+	rm -f data/compiled/osha/raw.sqlite
+	./scripts/compile/sqlize_raw.py
 
+data/compiled/osha/raw.sqlite: data/compiled/osha/raw/
+	./scripts/compile/sqlize_raw.py
+
+
+collate_stash: data/compiled/osha/raw/
+
+data/compiled/osha/raw/:
+	./scripts/compile/collate_stashes.py
 
 
 ## collect phase
@@ -31,6 +40,6 @@ fetch:
 	./scripts/collect/fetch_zips.py
 
 
-
 clean:
 	@echo --- Cleaning stubs
+
