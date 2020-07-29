@@ -9,9 +9,9 @@ from pathlib import Path
 
 SRC_DIR = Path('data/compiled/osha/raw')
 TARGET_DB_PATH = Path('data/compiled/osha/raw.sqlite')
-SCHEMA_PATH = Path('data/cached/schemas/compiled_raw_schema.sql')
+SCHEMA_PATH = Path('data/cache/sql/compiled_raw_schema.sql')
 
-SKIPPED_FILES = ('metadata', 'data_dictionary')
+SKIPPED_FILES = ('data_dictionary',)
 
 
 

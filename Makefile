@@ -28,10 +28,8 @@ data/compiled/osha/raw/:
 ## collect phase
 collect: fetch unpack_zips stash
 
-
 stash:
 	./scripts/collect/stash_csvs.py
-
 
 unpack_zips:
 	./scripts/collect/unpack_zips.py

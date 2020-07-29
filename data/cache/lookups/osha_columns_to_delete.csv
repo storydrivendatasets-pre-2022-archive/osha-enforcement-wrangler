@@ -1,0 +1,8 @@
+tbl_name,col_name,notes
+optional_info,opt_info_id,all blanks
+optional_info,opt_type,always 'N'
+accident,event_time,all blanks
+accident,state_flag,all blanks
+accident,abstract_text,all blanks
+accident_injury,fall_distance,all blanks
+inspection,state_flag,all blanks

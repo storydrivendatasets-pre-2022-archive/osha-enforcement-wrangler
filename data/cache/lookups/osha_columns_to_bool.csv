@@ -1,0 +1,13 @@
+tbl_name,col_name,notes
+inspection,adv_notice,Y/N/BLANK
+inspection,safety_manuf,
+inspection,safety_const,
+inspection,safety_marit,
+inspection,safety_manuf,
+inspection,health_const,
+inspection,health_marit,
+inspection,migrant,
+related_activity,rel_safety,
+related_activity,rel_health,
+violation,emphasis,
+violation,delete_flag,
