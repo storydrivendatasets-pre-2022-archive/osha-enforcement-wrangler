@@ -11,7 +11,7 @@ SRC_DIR = Path('data/compiled/osha/raw')
 TARGET_DB_PATH = Path('data/compiled/osha/raw.sqlite')
 SCHEMA_PATH = Path('data/cache/sql/compiled_raw_schema.sql')
 
-SKIPPED_FILES = ('data_dictionary',)
+SKIPPED_FILES = ('data_dictionary', 'metadata',)
 
 
 
@@ -24,50 +24,70 @@ def create_tables(connection, schema_path=SCHEMA_PATH):
         mylog(_1stline)
         connection.cursor().execute(stmt)
 
+def get_data_paths(srcdir=SRC_DIR):
+    paths = sorted(p for p in SRC_DIR.glob('*.csv')
+                    if all(_sk not in p.name
+                    for _sk in SKIPPED_FILES))
+#   return [p for p in paths if 'osha_vio' in  p.name]
+    return paths
+
 
 
 def import_table(connection, src_path):
+    NULL_COUNT = 0
 
-    def get_table_name(path):
+    def _convert_blank_to_null(iterdata):
+        nonlocal NULL_COUNT
+        for row in iterdata:
+            for i, val in enumerate(row):
+                if val == '':
+                    row[i] = None
+                    NULL_COUNT += 1
+#           import pdb; pdb.set_trace()
+            yield row
+
+    def _get_table_name(path):
         return path.stem.split('osha_')[1]
 
-    def get_insert_statement(tablename, fields):
+    def _get_insert_statement(tablename, fields):
         fields_qstr = ', '.join(fields)
         vals_qstr = ', '.join('?' for f in fields)
         return f"INSERT INTO {tablename}({fields_qstr}) VALUES ({vals_qstr})"
 
-    mylog(src_path, label="Reading")
-    tablename = get_table_name(src_path)
-    mylog(tablename, label="Importing into table")
 
+    mylog(src_path, label="Reading")
     srcfile = src_path.open()
     records = csv.reader(srcfile)
     fieldnames = next(records)
 
-    iq = get_insert_statement(tablename, fieldnames)
+    tablename = _get_table_name(src_path)
+    mylog(tablename, label="Importing into table")
+
+    iq = _get_insert_statement(tablename, fieldnames)
     myinfo(iq, label="INSERT query")
 
+    xrecords = _convert_blank_to_null(records)
     with connection as db:
         cursor = db.cursor()
-        cursor.executemany(iq, records)
+        cursor.executemany(iq, xrecords)
+
         qx = cursor.execute(f'SELECT COUNT(1) FROM "{tablename}"')
         myinfo(f"{qx.fetchone()[0]} rows in {tablename}", label="Row count")
 
+    myinfo(NULL_COUNT, label="Empty cells NULLED")
+    srcfile.close()
+
+
 
 def main():
-    def connect_to_db(db_path):
+    def _connect_to_db(db_path):
         dp = Path(db_path).expanduser().as_posix()
         return apsw.Connection(dp)
 
-    def get_data_paths(srcdir=SRC_DIR):
-        paths = sorted(p for p in SRC_DIR.glob('*.csv')
-                        if all(_sk not in p.name
-                        for _sk in SKIPPED_FILES))
-        return paths
 
 
     mylog(TARGET_DB_PATH, label="Connecting to")
-    conn = connect_to_db(TARGET_DB_PATH)
+    conn = _connect_to_db(TARGET_DB_PATH)
 
     mylog("Creating tables")
     create_tables(conn)

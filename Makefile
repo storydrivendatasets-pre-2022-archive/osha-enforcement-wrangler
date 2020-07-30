@@ -15,14 +15,14 @@ compile_db:
 	rm -f data/compiled/osha/raw.sqlite
 	./scripts/compile/sqlize_raw.py
 
-data/compiled/osha/raw.sqlite: data/compiled/osha/raw/
-	./scripts/compile/sqlize_raw.py
+data/compiled/osha/raw.sqlite: data/compiled/osha/raw/ compile_db
+
+data/compiled/osha/raw/: data/compiled/osha/raw/ collate_stash
 
 
-collate_stash: data/compiled/osha/raw/
-
-data/compiled/osha/raw/:
+collate_stash:
 	./scripts/compile/collate_stashes.py
+
 
 
 ## collect phase

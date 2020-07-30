@@ -28,10 +28,17 @@ TARGET_DIR = Path('data', 'compiled', 'osha', 'raw')
 
 
 def main():
-    data_dirs = sorted(d for d in STASH_DIR.iterdir() if d.is_dir())
-    myinfo(f"{STASH_DIR}", f"{len(data_dirs)} data directories", label="Main stash dir")
 
-    TARGET_DIR.mkdir(parents=True, exist_ok=True)
+    def _fix_header(fields):
+        """
+        we expect every actual data table to have a "load_dt" column as its last column,
+            but some tables have load_date or ld_dt
+        """
+        header = fields.copy()
+        if fields[-1] in ('load_date', 'ld_dt',):
+            header[-1] = 'load_dt'
+            myinfo(f"From {fields[-1]} to {header[-1]}", label='Fixed header')
+        return header
 
     # def init_csv(seriesname):
     #     """seriesname is a expected to be a string corresponding to
@@ -39,13 +46,20 @@ def main():
     #     """
 
 
+    data_dirs = sorted(d for d in STASH_DIR.iterdir() if d.is_dir())
+    myinfo(f"{STASH_DIR}", f"{len(data_dirs)} data directories", label="Main stash dir")
+
+    TARGET_DIR.mkdir(parents=True, exist_ok=True)
+
+
+
     for datadir in data_dirs:
         src_paths = sorted(datadir.glob('*.csv'))
         myinfo(f"{datadir}", f"{len(src_paths)} files", label="Stash subdir")
 
-        destpath = TARGET_DIR.joinpath(f'{datadir.name}.csv')
-        destfile = open(destpath, 'w')
-        dest = csv.writer(destfile)
+        targetpath = TARGET_DIR.joinpath(f'{datadir.name}.csv')
+        targetfile = open(targetpath, 'w')
+        target = csv.writer(targetfile)
 
         _rowcount = 0
         for series_idx, srcpath in enumerate(src_paths):
@@ -53,14 +67,16 @@ def main():
             with open(srcpath) as srcfile:
                 src = csv.reader(srcfile)
                 header = next(src)
+
                 if series_idx == 0:
-                    # first file in series, include header
-                    dest.writerow(header)
+                    # first file in series, write header to target
+                    xheader = _fix_header(header)
+                    target.writerow(xheader)
                 for row in src:
-                    dest.writerow(row)
+                    target.writerow(row)
                     _rowcount += 1
-        myinfo(destpath, f"{_rowcount} rows total (+ header)", label="Wrote")
-        destfile.close()
+        myinfo(targetpath, f"{_rowcount} rows total (+ header)", label="Wrote")
+        targetfile.close()
 
 if __name__ == '__main__':
     main()

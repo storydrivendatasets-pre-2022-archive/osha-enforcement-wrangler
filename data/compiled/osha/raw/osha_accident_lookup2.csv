@@ -1,4 +1,4 @@
-accident_code,accident_number,accident_value,accident_letter,load_date
+accident_code,accident_number,accident_value,accident_letter,load_dt
 OCC,757,"Separating, filtering & clarifying mach. operators",,2018-11-09 20:56:02 EST
 OCC,758,Compressing and compacting machine operators,,2018-11-09 20:56:02 EST
 OCC,759,Painting and paint spraying machine operators,,2018-11-09 20:56:02 EST

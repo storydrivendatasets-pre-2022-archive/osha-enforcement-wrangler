@@ -29,12 +29,12 @@ CREATE TABLE IF NOT EXISTS "accident_injury" (
   "rel_insp_nr" INTEGER  NOT NULL,
   "age" INTEGER,
   "sex" TEXT,
-  "nature_of_inj" INTEGER NOT NULL,
+  "nature_of_inj" INTEGER,
   "part_of_body" INTEGER,
-  "src_of_injury" INTEGER NOT NULL,
-  "event_type" INTEGER NOT NULL,
-  "evn_factor" INTEGER NOT NULL,
-  "hum_factor" INTEGER NOT NULL,
+  "src_of_injury" INTEGER,
+  "event_type" INTEGER,
+  "evn_factor" INTEGER,
+  "hum_factor" INTEGER,
   "occ_code" INTEGER,
   "degree_of_inj" INTEGER,
   "task_assigned" INTEGER,
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS "accident_lookup2" (
   "accident_number" INTEGER,
   "accident_value" TEXT NOT NULL,
   "accident_letter" TEXT,
-  "load_date" TEXT NOT NULL
+  "load_dt" TEXT NOT NULL
 );
 
 
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS "inspection" (
   "case_mod_date" TEXT,
   "close_conf_date" TEXT,
   "close_case_date" TEXT,
-  "ld_dt" TEXT NOT NULL
+  "load_dt" TEXT NOT NULL
 );
 
 
@@ -127,8 +127,8 @@ CREATE TABLE IF NOT EXISTS "violation" (
   "activity_nr" INTEGER NOT NULL,
   "citation_id" TEXT NOT NULL,
   "delete_flag" TEXT,
-  "standard" TEXT NOT NULL,
-  "viol_type" TEXT NOT NULL,
+  "standard" TEXT,
+  "viol_type" TEXT,
   "issuance_date" TEXT  NOT NULL,
   "abate_date" TEXT,
   "abate_complete" TEXT,
@@ -158,9 +158,9 @@ CREATE TABLE IF NOT EXISTS "violation" (
 CREATE TABLE IF NOT EXISTS "violation_event" (
   "activity_nr" INTEGER NOT NULL,
   "citation_id" TEXT NOT NULL,
-  "pen_fta" TEXT NOT NULL,
-  "hist_event" TEXT NOT NULL,
-  "hist_date" TEXT NOT NULL,
+  "pen_fta" TEXT,
+  "hist_event" TEXT,
+  "hist_date" TEXT,
   "hist_penalty" REAL,
   "hist_abate_date" TEXT,
   "hist_vtype" TEXT,
