@@ -25,11 +25,26 @@ https://enforcedata.dol.gov/views/data_summary.php ([mirror](https://enforcedata
 
 
 - [ ] Wrangling
-    - [ ] create data/sql/wrangled_schema.sql
+    - Migration logistics
+        - [ ] How to use aspw to select from one db.table to create a table in another db?
+        - [ ] Or do I just want to do a CREATE AS statement, which removes the NOT NULL constraint? https://www.techonthenet.com/sqlite/tables/create_table_as.php
+        - [ ] or create data/sql/wrangled_schema.sql
+
     - [ ] Tidy/trim
-        - [ ] How to use aspw to select from one db.table to create a table in another db
+        - [ ] truncate all load_dt to just a date
         - [ ] concatenate narrative data:
+            - [ ] rename line_nr to line_count
             - [ ] accident_abstract
+                ```sh
+                SELECT 
+                    summary_nr
+                    , COUNT(1) as line_count
+                    , GROUP_CONCAT(abstract_text, '') AS abstract_text
+                    , MAX(load_dt) AS load_dt
+                FROM accident_abstract
+                GROUP BY summary_nr
+                HAVING line_count > 1
+                ```
             - [ ] violation_gen_duty_std
     - [ ] Fix boolean
     - [ ] rename columns?

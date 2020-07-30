@@ -11,22 +11,23 @@ ALL: clean
 
 ## compile phase
 
-compile_db:
+compile_db: data/compiled/osha/raw/
 	rm -f data/compiled/osha/raw.sqlite
 	./scripts/compile/sqlize_raw.py
 
 data/compiled/osha/raw.sqlite: data/compiled/osha/raw/ compile_db
 
-data/compiled/osha/raw/: data/compiled/osha/raw/ collate_stash
 
 
-collate_stash:
+data/compiled/osha/raw/: data/collected/osha/stash/
+	# compile_stash
 	./scripts/compile/collate_stashes.py
 
 
 
 ## collect phase
 collect: fetch unpack_zips stash
+
 
 stash:
 	./scripts/collect/stash_csvs.py

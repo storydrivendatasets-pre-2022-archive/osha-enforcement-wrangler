@@ -17,7 +17,7 @@ Has an optional argument, if you want to specify a specific snapshot of unpacked
 """
 
 from sys import path as syspath; syspath.append('./scripts')
-from myutils import mylog, myinfo, mywarn, existed_size
+from utils.mylog import *
 
 import csv
 from sys import argv

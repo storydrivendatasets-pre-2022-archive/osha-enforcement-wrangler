@@ -14,9 +14,8 @@ unzipped as: 'osha_violation_event_2.csv'
 
 """
 from sys import path as syspath; syspath.append('./scripts')
+from utils.mylog import *
 
-
-from myutils import mylog, myinfo, mywarn, existed_size
 from pathlib import Path
 import re
 from sys import argv

@@ -16,7 +16,7 @@ How to test in bash:
 
 """
 from sys import path as syspath; syspath.append('./scripts')
-from myutils import mylog, myinfo, mywarn, existed_size
+from utils.mylog import *
 
 import csv
 from sys import argv

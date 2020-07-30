@@ -1,30 +1,22 @@
 #!/usr/bin/env python3
 # DATA_DIR='data/compiled/osha/raw'
 from sys import path as syspath; syspath.append('./scripts')
-from myutils import mylog, myinfo, mywarn, existed_size
+from utils.mylog import *
+from utils.mydb import connect_to_db, create_tables, import_table_from_csv
 
-import apsw
-import csv
 from pathlib import Path
+import re
 
+SCHEMA_PATH = Path('data/cache/sql/compiled_raw_schema.sql')
 SRC_DIR = Path('data/compiled/osha/raw')
 TARGET_DB_PATH = Path('data/compiled/osha/raw.sqlite')
-SCHEMA_PATH = Path('data/cache/sql/compiled_raw_schema.sql')
 
 SKIPPED_FILES = ('data_dictionary', 'metadata',)
 
 
 
-def create_tables(connection, schema_path=SCHEMA_PATH):
-    statements = [s.strip() for s in SCHEMA_PATH.read_text().split(';')]
-    # assumes each create statement is delimited by ';'
-    for stmt in statements:
-        # excerpt stmt to get table name
-        _1stline = stmt.split('\n')[0]
-        mylog(_1stline)
-        connection.cursor().execute(stmt)
 
-def get_data_paths(srcdir=SRC_DIR):
+def get_data_paths():
     paths = sorted(p for p in SRC_DIR.glob('*.csv')
                     if all(_sk not in p.name
                     for _sk in SKIPPED_FILES))
@@ -33,68 +25,17 @@ def get_data_paths(srcdir=SRC_DIR):
 
 
 
-def import_table(connection, src_path):
-    NULL_COUNT = 0
-
-    def _convert_blank_to_null(iterdata):
-        nonlocal NULL_COUNT
-        for row in iterdata:
-            for i, val in enumerate(row):
-                if val == '':
-                    row[i] = None
-                    NULL_COUNT += 1
-#           import pdb; pdb.set_trace()
-            yield row
-
-    def _get_table_name(path):
-        return path.stem.split('osha_')[1]
-
-    def _get_insert_statement(tablename, fields):
-        fields_qstr = ', '.join(fields)
-        vals_qstr = ', '.join('?' for f in fields)
-        return f"INSERT INTO {tablename}({fields_qstr}) VALUES ({vals_qstr})"
-
-
-    mylog(src_path, label="Reading")
-    srcfile = src_path.open()
-    records = csv.reader(srcfile)
-    fieldnames = next(records)
-
-    tablename = _get_table_name(src_path)
-    mylog(tablename, label="Importing into table")
-
-    iq = _get_insert_statement(tablename, fieldnames)
-    myinfo(iq, label="INSERT query")
-
-    xrecords = _convert_blank_to_null(records)
-    with connection as db:
-        cursor = db.cursor()
-        cursor.executemany(iq, xrecords)
-
-        qx = cursor.execute(f'SELECT COUNT(1) FROM "{tablename}"')
-        myinfo(f"{qx.fetchone()[0]} rows in {tablename}", label="Row count")
-
-    myinfo(NULL_COUNT, label="Empty cells NULLED")
-    srcfile.close()
-
-
 
 def main():
-    def _connect_to_db(db_path):
-        dp = Path(db_path).expanduser().as_posix()
-        return apsw.Connection(dp)
-
-
-
     mylog(TARGET_DB_PATH, label="Connecting to")
-    conn = _connect_to_db(TARGET_DB_PATH)
+    conn = connect_to_db(TARGET_DB_PATH)
 
     mylog("Creating tables")
-    create_tables(conn)
+    create_tables(conn, schema_path=SCHEMA_PATH)
 
     srcpaths = get_data_paths()
     for srcpath in srcpaths:
-        import_table(conn, srcpath)
+        import_table_from_csv(conn, srcpath)
 
     conn.close()
 

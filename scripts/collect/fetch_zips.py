@@ -8,8 +8,7 @@ Reads data/MANIFEST.yaml, and for each entry where autocollect==true, downloads 
 
 """
 from sys import path as syspath; syspath.append('./scripts')
-
-from myutils import mylog, myinfo, mywarn, fetch_and_save
+from utils.mylog import *
 
 from pathlib import Path
 import requests
@@ -35,6 +34,42 @@ def targetpath(url):
     return TARGET_DIR.joinpath(f"{yr}-{mth}-{day}", 'zips',  bname)
 
 
+
+def fetch(url):
+    """
+    easy downloading function: provides progress bar
+    https://stackoverflow.com/questions/37573483/progress-bar-while-download-file-over-http-with-requests
+    """
+    resp = requests.get(url, stream=True)
+    content_length = int(resp.headers.get('content-length', 0))
+    blocksize = 1024
+    progress_bar = tqdm(total=content_length, unit='iB', unit_scale=True)
+
+    for datablock in resp.iter_content(blocksize):
+        progress_bar.update(len(datablock))
+        yield datablock
+    progress_bar.close()
+
+
+def fetch_and_save(url, destpath):
+    xb = existed_size(destpath)
+    purl = Path(url)
+    if xb:
+        mylog(f"{destpath}", f"{xb} bytes", label="Exists")
+        mylog(purl.name, purl.parent, label="Skipping")
+    else:
+        mylog(purl.name, purl.parent, label="Downloading")
+        resp = fetch(url)
+        destpath.parent.mkdir(exist_ok=True, parents=True)
+        with open(destpath, 'wb') as dest:
+            for data in resp:
+                dest.write(data)
+
+        mylog(destpath, f"{existed_size(destpath)} bytes", label="Saved")
+
+
+
+
 def fetch_catalog_urls():
     mylog(CATALOG_URL, label="Fetching catalog")
     resp = requests.post(CATALOG_URL, data={'agency': 'osha'})
@@ -47,6 +82,8 @@ def fetch_catalog_urls():
         https://enfxfr.dol.gov/data_catalog/OSHA/osha_accident_injury_20200727.csv.zip
     """
     return [u.replace('../data_catalog', 'data_catalog') for u in urls]
+
+
 
 
 def main():
