@@ -1,0 +1,31 @@
+INSERT INTO target_db.accident(
+    "summary_nr"
+    , "report_id"
+    , "event_date"
+    , "event_desc"
+    , "event_keyword"
+    , "const_end_use"
+    , "build_stories"
+    , "nonbuild_ht"
+    , "project_cost"
+    , "project_type"
+    , "sic_list"
+    , "fatality"
+    , "load_dt"
+)
+SELECT
+    "summary_nr"
+    , "report_id"
+    , "event_date"
+    , "event_desc"
+    , "event_keyword"
+    , "const_end_use"
+    , "build_stories"
+    , "nonbuild_ht"
+    , "project_cost"
+    , "project_type"
+    , "sic_list"
+    , "fatality"
+    , "load_dt"
+FROM src_db.accident
+;

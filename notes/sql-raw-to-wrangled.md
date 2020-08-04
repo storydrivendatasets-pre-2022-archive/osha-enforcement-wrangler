@@ -1,8 +1,8 @@
 
 
-## Notes on Trimming the compiled data
+## Notes on Trimming the compiled raw data and converting to wrangled db
 
-
+Each subhed notes things that have to be changed for the `wrangled_schema.sql`
 
 ### accident
 
@@ -27,7 +27,8 @@
 - load_dt: ld_dt
 
 ### optional_info
-(in spreadsheet)
+opt_info_id: all blanks
+opt_type:    always 'N'
 
 ### related_activity
 - bool: rel_safety, rel_health

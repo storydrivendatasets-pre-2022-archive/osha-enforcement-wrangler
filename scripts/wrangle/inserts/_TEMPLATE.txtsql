@@ -1,0 +1,11 @@
+INSERT INTO target_db.TABLE_NAME(
+    "summary_nr"
+    , "report_id"
+)
+SELECT
+    "summary_nr"
+    , "report_id"
+
+
+FROM src_db.TABLE_NAME
+;
