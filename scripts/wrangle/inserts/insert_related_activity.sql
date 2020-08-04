@@ -1,5 +1,5 @@
 INSERT INTO target_db.related_activity(
-"activity_nr"
+  "activity_nr"
   , "rel_type"
   , "rel_act_nr"
   , "rel_safety"

@@ -32,14 +32,17 @@ def load_custom_functions(connection):
     return connection
 
 def inserts(connection):
+    def _get_paths():
+        return sorted(INSERTS_DIR.glob('*.sql'))
+
     cursor = connection.cursor()
     cursor.execute(f"ATTACH DATABASE '{SRC_DB_PATH}' AS src_db;")
     cursor.execute(f"ATTACH DATABASE '{TARGET_DB_PATH}' AS target_db;")
 
-    for insertpath in sorted(INSERTS_DIR.glob('*.sql'))[-1:]:
+    for i, insertpath in enumerate(_get_paths()):
         tname = re.match(r'insert_(\w+)', insertpath.stem).groups()[0]
         targettbl = f"target_db.{tname}"
-        mylog(targettbl, insertpath, label="Running insert")
+        mylog(f"{i}. {targettbl}", insertpath, label="Running insert")
         stmt = insertpath.read_text()
         cursor.execute(stmt)
 

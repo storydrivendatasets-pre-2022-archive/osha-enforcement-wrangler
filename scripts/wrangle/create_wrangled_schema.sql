@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS "accident" (
   "fatality" TEXT,
 -- always NULL  "state_flag" INTEGER,
 -- always NULL  "abstract_text" INTEGER,
-  "load_dt" TEXT NOT NULL
+  "load_dt" DATE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "accident_abstract" (
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS "accident_abstract" (
 -- obsolete  "line_nr" INTEGER NOT NULL,
   "line_count" INTEGER NOT NULL, -- result of group count
   "abstract_text" TEXT,
-  "load_dt" TEXT NOT NULL
+  "load_dt" DATE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "accident_injury" (
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS "accident_injury" (
 -- always NULL  fall_distance INTEGER,
   "fall_ht" INTEGER,
 -- unneeded  injury_line_nr INTEGER NOT NULL,
-  "load_dt" TEXT NOT NULL
+  "load_dt" DATE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "accident_lookup" (
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS "accident_lookup" (
   "accident_number" INTEGER,
   "accident_value" TEXT NOT NULL,
   "accident_letter" TEXT,
-  "load_dt" TEXT NOT NULL
+  "load_dt" DATE NOT NULL
 );
 
 
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS "inspection" (
   "case_mod_date" TEXT,
   "close_conf_date" TEXT,
   "close_case_date" TEXT,
-  "load_dt" TEXT NOT NULL
+  "load_dt" DATE NOT NULL
 );
 
 
@@ -104,24 +104,24 @@ CREATE TABLE IF NOT EXISTS "optional_info" (
   "opt_id" INTEGER,
   "opt_value" TEXT,
   -- ALWAYS NULL"opt_info_id" INTEGER,
-  "load_dt" TEXT NOT NULL
+  "load_dt" DATE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "related_activity" (
-"activity_nr" INTEGER NOT NULL,
+  "activity_nr" INTEGER NOT NULL,
   "rel_type" TEXT,
   "rel_act_nr" INTEGER,
   "rel_safety" BOOLEAN,
   "rel_health" BOOLEAN,
-  "load_dt" TEXT NOT NULL
+  "load_dt" DATE NOT NULL
 );
 
 
 CREATE TABLE IF NOT EXISTS "strategic_codes" (
-"activity_nr" INTEGER NOT NULL,
+  "activity_nr" INTEGER NOT NULL,
   "prog_type" TEXT NOT NULL,
   "prog_value" TEXT NOT NULL,
-  "load_dt" TEXT NOT NULL
+  "load_dt" DATE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "violation" (
@@ -153,20 +153,20 @@ CREATE TABLE IF NOT EXISTS "violation" (
   "hazsub3" TEXT,
   "hazsub4" TEXT,
   "hazsub5" TEXT,
-  "load_dt" TEXT NOT NULL
+  "load_dt" DATE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "violation_event" (
   "activity_nr" INTEGER NOT NULL,
   "citation_id" TEXT NOT NULL,
-  "pen_fta" TEXT,
-  "hist_event" TEXT,
-  "hist_date" TEXT,
-  "hist_penalty" REAL,
-  "hist_abate_date" TEXT,
-  "hist_vtype" TEXT,
+  "pen_fta" CHAR(1),
+  "hist_event" CHAR(1),
+  "hist_date" DATE,
+  "hist_penalty" DECIMAL(16, 2),
+  "hist_abate_date" DATE,
+  "hist_vtype" CHAR(1),
   "hist_insp_nr" INTEGER,
-  "load_dt" TEXT NOT NULL
+  "load_dt" DATE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "violation_gen_duty_std" (
@@ -175,7 +175,7 @@ CREATE TABLE IF NOT EXISTS "violation_gen_duty_std" (
   -- obsoleted by group count "line_nr" INTEGER NOT NULL,
   "line_text" TEXT,
   "line_count" INTEGER NOT NULL, -- derived from group count
-  "starting_line" TEXT NOT NULL,
-  "ending_line" TEXT NOT NULL,
-  "load_dt" TEXT NOT NULL
+  "start_line_nr" TEXT NOT NULL,
+  "end_line_nr" TEXT NOT NULL,
+  "load_dt" DATE NOT NULL
 );

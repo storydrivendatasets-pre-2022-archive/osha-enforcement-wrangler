@@ -51,10 +51,12 @@ fetch:
 
 #### sql stuff
 index_wrangled_db: $(WRANGLED_DB_PATH)
+	# indexing wrangled db
 	sqlite3 $< < scripts/wrangle/index_wrangled.sql
 
 
 index_compiled_db: ${COMPILED_DB_PATH}
+	# indexing compiled db
 	sqlite3 $< < scripts/compile/index_compiled.sql
 
 

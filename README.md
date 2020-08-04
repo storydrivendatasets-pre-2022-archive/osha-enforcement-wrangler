@@ -29,10 +29,9 @@ https://enforcedata.dol.gov/views/data_summary.php ([mirror](https://enforcedata
         - [O] How to use aspw to select from one db.table to create a table in another db?
         - [O] Or do I just want to do a CREATE AS statement, which removes the NOT NULL constraint? https://www.techonthenet.com/sqlite/tables/create_table_as.php
         - [X] or create data/sql/wrangled_schema.sql
-        - [ ] create each individual INSERT INTO statement
-            - [x] concatenate narrative data:
-                - [ ] rename line_nr to line_count
-                - [ ] accident_abstract
+        - [X] create each individual INSERT INTO statement
+            - [X] concatenate narrative data:
+                - [X] accident_abstract
                     ```sh
                     SELECT 
                         summary_nr
@@ -43,14 +42,20 @@ https://enforcedata.dol.gov/views/data_summary.php ([mirror](https://enforcedata
                     GROUP BY summary_nr
                     HAVING line_count > 1
                     ```
-                - [ ] violation_gen_duty_std
+                - [X] violation_gen_duty_std
 
     - Updating
-        - [ ] truncate all load_dt to just a date (or do it in the INSERT INTO?)
-        - [ ] Write pythonsql function to make_boolean out of 'Y', 'N', etc
+        - [X] truncate all load_dt to just a date (or do it in the INSERT INTO?)
+        - [X] Write pythonsql function to make_boolean out of 'Y', 'N', etc
     - [ ] rename columns?
     - [ ] drop unnecessary load_dt?
+        - removing ALL load_dt saves 500MB
 
 
+## Overall questions and other work
 
+- [ ] Create a osha_enum lookup table
+    - violation_event,hist_event, hist_vtype, pen_fta
 
+- [ ] What is violation_event.hist_insp_nr? Most are null
+- [ ] Add metadata to table definition
