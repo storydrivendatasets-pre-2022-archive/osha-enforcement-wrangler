@@ -43,9 +43,9 @@ CREATE TABLE IF NOT EXISTS "accident_injury" (
   "const_op" INTEGER,
   "const_op_cause" INTEGER,
   "fat_cause" INTEGER,
--- always NULL  "fall_distance" INTEGER,
+-- always NULL  fall_distance INTEGER,
   "fall_ht" INTEGER,
--- unneeded  "injury_line_nr" INTEGER NOT NULL,
+-- unneeded  injury_line_nr INTEGER NOT NULL,
   "load_dt" TEXT NOT NULL
 );
 

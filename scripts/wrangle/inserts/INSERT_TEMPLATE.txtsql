@@ -1,11 +1,12 @@
 INSERT INTO target_db.TABLE_NAME(
     "summary_nr"
     , "report_id"
+    , "load_dt"
 )
 SELECT
     "summary_nr"
     , "report_id"
-
+    , SUBSTR(load_dt, 1, 10)
 
 FROM src_db.TABLE_NAME
 ;

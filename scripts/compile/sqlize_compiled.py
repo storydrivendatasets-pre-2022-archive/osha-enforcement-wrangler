@@ -29,7 +29,7 @@ def get_data_paths():
 def index_table(connection):
     mylog(INDEXES_PATH, label="Indexing tables")
     stmt = INDEXES_PATH.read_text()
-    connection.cursor().execute()
+    connection.cursor().execute(stmt)
 
 
 

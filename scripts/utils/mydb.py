@@ -30,6 +30,11 @@ def create_tables(connection, schema_path):
         connection.cursor().execute(stmt)
 
 
+def count_rows(cursor, tablename):
+    tbl = '.'.join(f'''"{t.strip('"')}"''' for t in tablename.split('.'))
+    qx = cursor.execute(f"SELECT COUNT(1) FROM {tbl}")
+    return qx.fetchone()[0]
+
 
 
 def import_table_from_csv(connection, src_path):
@@ -39,7 +44,7 @@ def import_table_from_csv(connection, src_path):
         nonlocal NULL_COUNT
         for row in iterdata:
             for i, val in enumerate(row):
-                if val == '':
+                if val.strip() == '':
                     row[i] = None
                     NULL_COUNT += 1
 #           import pdb; pdb.set_trace()
@@ -71,8 +76,8 @@ def import_table_from_csv(connection, src_path):
         cursor = db.cursor()
         cursor.executemany(iq, xrecords)
 
-        qx = cursor.execute(f'SELECT COUNT(1) FROM "{tablename}"')
-        myinfo(f"{qx.fetchone()[0]} rows in {tablename}", label="Row count")
+        myinfo(f"{count_rows(cursor, tablename)} rows in {tablename}", label="Row count")
+
 
     myinfo(NULL_COUNT, label="Empty cells NULLED")
     srcfile.close()

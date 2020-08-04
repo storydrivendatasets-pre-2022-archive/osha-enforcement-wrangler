@@ -1,6 +1,9 @@
 .DEFAULT_GOAL := help
 .PHONY : clean_wrangled_db clean_compiled_db help ALL
 
+clean:
+	@echo --- Cleaning stubs
+
 
 help:
 	@echo 'Run `make ALL` to see how things run from scratch'
@@ -11,7 +14,7 @@ WRANGLED_DB_PATH = 	data/wrangled/osha_wrangled.sqlite
 COMPILED_DB_PATH = data/compiled/osha_compiled.sqlite
 
 ## wrangle phase
-wrangle_db: clean_wrangled_db ${WRANGLED_DB_PATH}
+wrangle_db: clean_wrangled_db ${WRANGLED_DB_PATH} index_wrangled_db
 
 
 ${WRANGLED_DB_PATH}: ${COMPILED_DB_PATH}
@@ -19,7 +22,7 @@ ${WRANGLED_DB_PATH}: ${COMPILED_DB_PATH}
 
 ## compile phase
 
-compile_db: clean_compiled_db ${COMPILED_DB_PATH}
+compile_db: clean_compiled_db ${COMPILED_DB_PATH} index_compiled_db
 
 ${COMPILED_DB_PATH}: data/compiled/osha/raw/
 	./scripts/compile/sqlize_compiled.py
@@ -46,8 +49,15 @@ fetch:
 	./scripts/collect/fetch_zips.py
 
 
-clean:
-	@echo --- Cleaning stubs
+#### sql stuff
+index_wrangled_db: $(WRANGLED_DB_PATH)
+	sqlite3 $< < scripts/wrangle/index_wrangled.sql
+
+
+index_compiled_db: ${COMPILED_DB_PATH}
+	sqlite3 $< < scripts/compile/index_compiled.sql
+
+
 
 
 clean_wrangled_db:

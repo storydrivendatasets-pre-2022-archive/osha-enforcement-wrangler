@@ -15,7 +15,7 @@ SELECT
     summary_nr
     , COUNT(1) as line_count
     , GROUP_CONCAT(abstract_text, '') AS abstract_text
-    , MAX(load_dt) AS load_dt
+    , SUBSTR(MAX(load_dt), 1, 10) AS load_dt
 FROM orderedtbl
 GROUP BY summary_nr
 ;

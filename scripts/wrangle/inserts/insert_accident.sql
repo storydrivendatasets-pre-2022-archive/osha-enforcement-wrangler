@@ -16,7 +16,7 @@ INSERT INTO target_db.accident(
 SELECT
     "summary_nr"
     , "report_id"
-    , "event_date"
+    , SUBSTR(event_date, 1, 16)
     , "event_desc"
     , "event_keyword"
     , "const_end_use"
@@ -26,6 +26,6 @@ SELECT
     , "project_type"
     , "sic_list"
     , "fatality"
-    , "load_dt"
+    , SUBSTR(load_dt, 1, 10)
 FROM src_db.accident
 ;
