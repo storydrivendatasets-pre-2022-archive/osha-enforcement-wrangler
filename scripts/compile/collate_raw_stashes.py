@@ -2,17 +2,19 @@
 """
 ./compile/collate_stashes.py
 
-Given data/collected/osha/stash/**/, reverse the file splitting
+DEPRECATED in Makefile: no longer a need to do a stash step as part of collect->compile workflow
+
+Given data/collected/stash/**/, reverse the file splitting
     and create single files for each data series in:
     data/compiled/raw/
 
 How to test in bash:
     # single file
-    $ diff --strip-trailing-cr data/compiled/osha/raw/osha_accident_lookup2.csv <(xsv fmt data/collected/osha/stash/osha_accident_lookup2/osha_accident_lookup2.csv)
+    $ diff --strip-trailing-cr data/compiled/raw/osha_accident_lookup2.csv <(xsv fmt data/collected/stash/osha_accident_lookup2/osha_accident_lookup2.csv)
 
     # big multiseries
-    $ xsv cat rows data/collected/osha/stash/osha_inspection/*.csv > /tmp/xsv-cat-osha_inspection.csv
-    $ diff --strip-trailing-cr data/compiled/osha/raw/osha_inspection.csv /tmp/xsv-cat-osha_inspection.csv
+    $ xsv cat rows data/collected/stash/osha_inspection/*.csv > /tmp/xsv-cat-osha_inspection.csv
+    $ diff --strip-trailing-cr data/compiled/raw/osha_inspection.csv /tmp/xsv-cat-osha_inspection.csv
 
 """
 from sys import path as syspath; syspath.append('./scripts')
@@ -23,8 +25,8 @@ from sys import argv
 from pathlib import Path
 import re
 
-DEFAULT_STASH_DIR = Path('data', 'collected', 'osha', 'stash')
-TARGET_DIR = Path('data', 'compiled', 'osha', 'raw')
+DEFAULT_STASH_DIR = Path('data', 'collected', 'stash')
+TARGET_DIR = Path('data', 'compiled', 'raw')
 
 
 def main(stash_dir, target_dir):

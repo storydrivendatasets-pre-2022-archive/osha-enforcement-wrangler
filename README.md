@@ -47,21 +47,25 @@ https://enforcedata.dol.gov/views/data_summary.php ([mirror](https://enforcedata
     - Updating
         - [X] truncate all load_dt to just a date (or do it in the INSERT INTO?)
         - [X] Write pythonsql function to make_boolean out of 'Y', 'N', etc
-    - [ ] rename columns?
-    - [ ] drop unnecessary load_dt?
+    - [NO] rename columns?
+    - [x] drop unnecessary load_dt?
         - removing ALL load_dt saves 500MB
         - removing a few saves 70MB
 
 
 ## Repo reorg
 
+- [X] Take the "Stash" step out of the main Make
+    - [X] compile step should read directly from unpacked
+- [ ] Index wrangled db
+
+- [ ] create separate repo for data
 - [ ] Create a osha_enum lookup table
     - violation_event,hist_event, hist_vtype, pen_fta
 - [ ] Add metadata to table definition
-- [ ] Take the "Stash" step out of the main Make; create separate repo for data
 
 ## Overall questions and other work
 
-
+- [ ] Why is collate raw so slow??
 - [ ] What is violation_event.hist_insp_nr? Most are null
 

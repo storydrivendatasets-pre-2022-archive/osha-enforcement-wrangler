@@ -8,7 +8,7 @@ clean:
 help:
 	@echo 'Run `make ALL` to see how things run from scratch'
 
-ALL: collect wrangle_db
+ALL: collect compile_db wrangle_db
 
 WRANGLED_DB_PATH = 	data/wrangled/osha_wrangled.sqlite
 COMPILED_DB_PATH = data/compiled/osha_compiled.sqlite
@@ -24,23 +24,24 @@ ${WRANGLED_DB_PATH}: ${COMPILED_DB_PATH}
 
 compile_db: clean_compiled_db ${COMPILED_DB_PATH} index_compiled_db
 
-${COMPILED_DB_PATH}: data/compiled/osha/raw/
+${COMPILED_DB_PATH}:
 	./scripts/compile/sqlize_compiled.py
 
 
 
-data/compiled/osha/raw/: data/collected/osha/stash/
-	# compile_stash
-	./scripts/compile/collate_raw_stashes.py $<
+# data/compiled/raw/: data/collected/stash/
+# 	# compile_stash
+# 	./scripts/compile/collate_raw_stashes.py $<
 
 
 
 ## collect phase
-collect: fetch unpack_zips stash
+collect: fetch unpack_zips
 
 
-stash:
-	./scripts/collect/stash_csvs.py
+# stash:
+# 	# deprecated
+# 	./scripts/collect/stash_csvs.py
 
 unpack_zips:
 	./scripts/collect/unpack_zips.py

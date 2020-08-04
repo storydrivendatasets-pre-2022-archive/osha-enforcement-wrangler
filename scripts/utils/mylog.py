@@ -6,12 +6,6 @@ MYLOG_CONSOLE = Console()
 
 
 
-def existed_size(path):
-    e = Path(path)
-    if e.is_file():
-        return e.stat().st_size
-    else:
-        return False
 
 def mylog(*args, label=None, color='cyan'):
     labtxt = f"[bold {color} on black]{label}:[/bold {color} on black] " if label else ""

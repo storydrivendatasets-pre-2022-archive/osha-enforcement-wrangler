@@ -8,6 +8,7 @@ Reads data/MANIFEST.yaml, and for each entry where autocollect==true, downloads 
 
 """
 from sys import path as syspath; syspath.append('./scripts')
+from utils.myfiler import existed_size, SNAPSHOTS_DATA_DIR
 from utils.mylog import *
 
 from pathlib import Path
@@ -17,7 +18,7 @@ from lxml.html import fromstring as lxsoup
 from urllib.parse import urlparse
 
 CATALOG_URL = 'https://enforcedata.dol.gov/views/data_summary.php'
-TARGET_DIR = Path('data', 'collected', 'osha', 'snapshots')
+TARGET_DIR = SNAPSHOTS_DATA_DIR
 
 
 def targetpath(url):

@@ -74,7 +74,7 @@ SELECT
     , "case_mod_date"
     , "close_conf_date"
     , "close_case_date"
-    , SUBSTR(load_dt, 1, 10)
+    , SUBSTR("ld_dt", 1, 10) AS "load_dt"
 
 FROM src_db.inspection
 ;

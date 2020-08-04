@@ -10,7 +10,7 @@ SELECT
     , "accident_number"
     , "accident_value"
     , "accident_letter"
---    , SUBSTR(load_dt, 1, 10)
+--    , SUBSTR(load_date, 1, 10)
 
 FROM src_db.accident_lookup2
 ;

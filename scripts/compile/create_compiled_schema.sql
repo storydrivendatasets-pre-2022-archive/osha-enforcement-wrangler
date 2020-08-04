@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS "accident_lookup2" (
   "accident_number" INTEGER,
   "accident_value" TEXT NOT NULL,
   "accident_letter" TEXT,
-  "load_dt" TEXT NOT NULL
+  "load_date" TEXT NOT NULL -- should be load_dt
 );
 
 
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS "inspection" (
   "case_mod_date" TEXT,
   "close_conf_date" TEXT,
   "close_case_date" TEXT,
-  "load_dt" TEXT NOT NULL
+  "ld_dt" TEXT NOT NULL  -- should be load_date
 );
 
 

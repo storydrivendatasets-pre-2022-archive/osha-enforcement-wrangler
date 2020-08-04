@@ -2,9 +2,9 @@
 
 """
 stash_csvs.py - for each subdirectory (i.e. series) of data in:
-     data/collected/osha/snapshots/YYYY-MM-DD/unpacked
+     data/collected/snapshots/YYYY-MM-DD/unpacked
 
-Creates re-sliced copies in: data/collected/osha/stash
+Creates re-sliced copies in: data/collected/stash
 
 The unpacked data is re-sliced (into files of DEFAULT_SLICE_COUNT rows each), if:
     - There's more than one file in the series
@@ -12,7 +12,7 @@ The unpacked data is re-sliced (into files of DEFAULT_SLICE_COUNT rows each), if
 
 Has an optional argument, if you want to specify a specific snapshot of unpacked data
 
-    ./collect/stash_csvs.py data/collected/osha/snapshots/2020-07-27/unpacked
+    ./collect/stash_csvs.py data/collected/snapshots/2020-07-27/unpacked
 
 """
 
@@ -24,8 +24,8 @@ from sys import argv
 from pathlib import Path
 import re
 
-DATA_DIR = Path('data', 'collected', 'osha', 'snapshots')
-TARGET_DIR = Path('data', 'collected', 'osha', 'stash')
+DATA_DIR = Path('data', 'collected',  'snapshots')
+TARGET_DIR = Path('data', 'collected',  'stash')
 
 # Number of rows to arbitrarily split a file by
 DEFAULT_SLICE_COUNT = 100000
@@ -131,7 +131,7 @@ def stash_glom(glom, glom_name, targetdir, index_field=None):
 def main(main_srcdir, main_targetdir):
     # targetdir.mkdir(exist_ok=True, parents=True)
     for datadir in [d for d in main_srcdir.iterdir() if d.is_dir()]:
-        glomname = datadir.name # e.g. "osha_accident" from collected/osha/snapshots/YYYY-MM-DD/unpacked/osha_accident
+        glomname = datadir.name # e.g. "osha_accident" from collected/snapshots/YYYY-MM-DD/unpacked/osha_accident
         cnames = list(datadir.glob('*.csv'))
 
         if len(cnames) == 1 and existed_size(cnames[0]) < SINGLE_FILE_SIZE_THRESHOLD:
