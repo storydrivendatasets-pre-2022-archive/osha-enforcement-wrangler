@@ -8,7 +8,7 @@ clean:
 help:
 	@echo 'Run `make ALL` to see how things run from scratch'
 
-ALL: wrangle_db
+ALL: collect wrangle_db
 
 WRANGLED_DB_PATH = 	data/wrangled/osha_wrangled.sqlite
 COMPILED_DB_PATH = data/compiled/osha_compiled.sqlite
@@ -31,7 +31,7 @@ ${COMPILED_DB_PATH}: data/compiled/osha/raw/
 
 data/compiled/osha/raw/: data/collected/osha/stash/
 	# compile_stash
-	./scripts/compile/collate_stashes.py
+	./scripts/compile/collate_raw_stashes.py $<
 
 
 

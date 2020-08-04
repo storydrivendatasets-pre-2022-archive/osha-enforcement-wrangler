@@ -50,12 +50,18 @@ https://enforcedata.dol.gov/views/data_summary.php ([mirror](https://enforcedata
     - [ ] rename columns?
     - [ ] drop unnecessary load_dt?
         - removing ALL load_dt saves 500MB
+        - removing a few saves 70MB
 
 
-## Overall questions and other work
+## Repo reorg
 
 - [ ] Create a osha_enum lookup table
     - violation_event,hist_event, hist_vtype, pen_fta
+- [ ] Add metadata to table definition
+- [ ] Take the "Stash" step out of the main Make; create separate repo for data
+
+## Overall questions and other work
+
 
 - [ ] What is violation_event.hist_insp_nr? Most are null
-- [ ] Add metadata to table definition
+

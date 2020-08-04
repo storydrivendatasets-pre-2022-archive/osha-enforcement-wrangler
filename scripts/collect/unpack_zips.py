@@ -26,10 +26,7 @@ DATA_DIR = Path('data', 'collected', 'osha', 'snapshots')
 
 def main(srcdir, destdir):
 
-    zipnames = list(srcdir.glob('*.zip'))
-    myinfo(f"Found {len(zipnames)} zipfiles")
-
-    def dest_filename(fname):
+    def _dest_name(fname):
         rx = re.search(r'(.+?)(\d+)\.(\w+)$', fname)
         if rx:
             rx = rx.groups()
@@ -38,15 +35,22 @@ def main(srcdir, destdir):
         return fname
 
 
+
+    zipnames = sorted(list(srcdir.glob('*.zip')))
+    myinfo(f"Found {len(zipnames)} zipfiles")
+
+
     for zn in zipnames:
         # we actually make a subdir for each zip file
         _zsub = re.search(r'(\w+)_\d{8}', zn.stem).groups()[0]
         zdir = destdir.joinpath(_zsub)
         zdir.mkdir(exist_ok=True, parents=True)
+
+        mylog(zn, label="Unpacking")
         zfile = ZipFile(zn)
         for zi in zfile.filelist:
             zname = zi.filename
-            fname = dest_filename(zname) if len(zfile.filelist) > 1 else zname
+            fname = _dest_name(zname) if len(zfile.filelist) > 1 else zname
             destpath = zdir.joinpath(fname)
             destpath.write_bytes(zfile.read(zname))
             mylog(destpath.name, destpath.parent, f"{existed_size(destpath)} bytes", label="Extracted")

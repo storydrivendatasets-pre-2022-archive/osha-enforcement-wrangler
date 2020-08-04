@@ -17,7 +17,7 @@ INSERT INTO target_db.accident_injury(
     , "const_op_cause"
     , "fat_cause"
     , "fall_ht"
-    , "load_dt"
+--    , "load_dt"
 )
 SELECT
     "summary_nr"
@@ -38,7 +38,7 @@ SELECT
     , "const_op_cause"
     , "fat_cause"
     , "fall_ht"
-    , SUBSTR(load_dt, 1, 10)
+ --   , SUBSTR(load_dt, 1, 10)
 
 FROM src_db.accident_injury
 ;

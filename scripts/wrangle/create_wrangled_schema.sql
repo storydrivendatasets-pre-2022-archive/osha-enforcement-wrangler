@@ -44,17 +44,17 @@ CREATE TABLE IF NOT EXISTS "accident_injury" (
   "const_op_cause" INTEGER,
   "fat_cause" INTEGER,
 -- always NULL  fall_distance INTEGER,
-  "fall_ht" INTEGER,
+  "fall_ht" INTEGER
 -- unneeded  injury_line_nr INTEGER NOT NULL,
-  "load_dt" DATE NOT NULL
+ -- "load_dt" DATE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "accident_lookup" (
   "accident_code" TEXT  NOT NULL,
   "accident_number" INTEGER,
   "accident_value" TEXT NOT NULL,
-  "accident_letter" TEXT,
-  "load_dt" DATE NOT NULL
+  "accident_letter" TEXT
+--  "load_dt" DATE NOT NULL
 );
 
 
@@ -102,9 +102,9 @@ CREATE TABLE IF NOT EXISTS "optional_info" (
 "activity_nr" INTEGER NOT NULL,
   -- ALWAYS N "opt_type" TEXT,
   "opt_id" INTEGER,
-  "opt_value" TEXT,
+  "opt_value" TEXT
   -- ALWAYS NULL"opt_info_id" INTEGER,
-  "load_dt" DATE NOT NULL
+--  "load_dt" DATE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "related_activity" (
@@ -112,16 +112,16 @@ CREATE TABLE IF NOT EXISTS "related_activity" (
   "rel_type" TEXT,
   "rel_act_nr" INTEGER,
   "rel_safety" BOOLEAN,
-  "rel_health" BOOLEAN,
-  "load_dt" DATE NOT NULL
+  "rel_health" BOOLEAN
+--  "load_dt" DATE NOT NULL
 );
 
 
 CREATE TABLE IF NOT EXISTS "strategic_codes" (
   "activity_nr" INTEGER NOT NULL,
   "prog_type" TEXT NOT NULL,
-  "prog_value" TEXT NOT NULL,
-  "load_dt" DATE NOT NULL
+  "prog_value" TEXT NOT NULL
+--  "load_dt" DATE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "violation" (
