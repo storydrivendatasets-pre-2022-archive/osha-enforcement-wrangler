@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS "accident" (
-  "summary_nr" INTEGER NOT NULL,
-  "report_id" INTEGER NOT NULL,
+  "summary_nr" TEXT NOT NULL,
+  "report_id" TEXT NOT NULL,
   "event_date" TEXT NOT NULL,
   "event_time" INTEGER,
   "event_desc" TEXT,
@@ -15,18 +15,18 @@ CREATE TABLE IF NOT EXISTS "accident" (
   "state_flag" INTEGER,
   "abstract_text" INTEGER,
   "load_dt" TEXT NOT NULL
-);
+);;--
 
 CREATE TABLE IF NOT EXISTS "accident_abstract" (
-  "summary_nr" INTEGER NOT NULL,
+  "summary_nr" TEXT NOT NULL,
   "line_nr" INTEGER NOT NULL,
   "abstract_text" TEXT,
   "load_dt" TEXT NOT NULL
-);
+);;--
 
 CREATE TABLE IF NOT EXISTS "accident_injury" (
-  "summary_nr" INTEGER NOT NULL,
-  "rel_insp_nr" INTEGER  NOT NULL,
+  "summary_nr" TEXT NOT NULL,
+  "rel_insp_nr" TEXT  NOT NULL,
   "age" INTEGER,
   "sex" TEXT,
   "nature_of_inj" INTEGER,
@@ -46,32 +46,32 @@ CREATE TABLE IF NOT EXISTS "accident_injury" (
   "fall_ht" INTEGER,
   "injury_line_nr" INTEGER NOT NULL,
   "load_dt" TEXT NOT NULL
-);
+);;--
 
 CREATE TABLE IF NOT EXISTS "accident_lookup2" (
   "accident_code" TEXT  NOT NULL,
-  "accident_number" INTEGER,
+  "accident_number" TEXT,
   "accident_value" TEXT NOT NULL,
   "accident_letter" TEXT,
   "load_date" TEXT NOT NULL -- should be load_dt
-);
+);;--
 
 
 CREATE TABLE IF NOT EXISTS "inspection" (
-"activity_nr" INTEGER NOT NULL,
-  "reporting_id" INTEGER NOT NULL,
+  "activity_nr" TEXT NOT NULL,
+  "reporting_id" TEXT NOT NULL,
   "state_flag" INTEGER,
   "estab_name" TEXT,
   "site_address" TEXT,
   "site_city" TEXT,
   "site_state" TEXT,
-  "site_zip" INTEGER,
+  "site_zip" TEXT,
   "owner_type" TEXT,
-  "owner_code" INTEGER,
+  "owner_code" TEXT,
   "adv_notice" TEXT,
   "safety_hlth" TEXT,
-  "sic_code" INTEGER,
-  "naics_code" INTEGER,
+  "sic_code" TEXT,
+  "naics_code" TEXT,
   "insp_type" TEXT,
   "insp_scope" TEXT,
   "why_no_insp" TEXT,
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS "inspection" (
   "mail_street" TEXT,
   "mail_city" TEXT,
   "mail_state" TEXT,
-  "mail_zip" INTEGER,
+  "mail_zip" TEXT,
   "host_est_key" TEXT,
   "nr_in_estab" INTEGER,
   "open_date" TEXT NOT NULL,
@@ -94,37 +94,37 @@ CREATE TABLE IF NOT EXISTS "inspection" (
   "close_conf_date" TEXT,
   "close_case_date" TEXT,
   "ld_dt" TEXT NOT NULL  -- should be load_date
-);
+);;--
 
 
 CREATE TABLE IF NOT EXISTS "optional_info" (
-"activity_nr" INTEGER NOT NULL,
+"activity_nr" TEXT NOT NULL,
   "opt_type" TEXT,
   "opt_id" INTEGER,
   "opt_value" TEXT,
   "opt_info_id" INTEGER,
   "load_dt" TEXT NOT NULL
-);
+);;--
 
 CREATE TABLE IF NOT EXISTS "related_activity" (
-"activity_nr" INTEGER NOT NULL,
+"activity_nr" TEXT NOT NULL,
   "rel_type" TEXT,
-  "rel_act_nr" INTEGER,
+  "rel_act_nr" TEXT,
   "rel_safety" TEXT,
   "rel_health" TEXT,
   "load_dt" TEXT NOT NULL
-);
+);;--
 
 
 CREATE TABLE IF NOT EXISTS "strategic_codes" (
-"activity_nr" INTEGER NOT NULL,
+"activity_nr" TEXT NOT NULL,
   "prog_type" TEXT NOT NULL,
   "prog_value" TEXT NOT NULL,
   "load_dt" TEXT NOT NULL
-);
+);;--
 
 CREATE TABLE IF NOT EXISTS "violation" (
-  "activity_nr" INTEGER NOT NULL,
+  "activity_nr" TEXT NOT NULL,
   "citation_id" TEXT NOT NULL,
   "delete_flag" TEXT,
   "standard" TEXT,
@@ -153,10 +153,10 @@ CREATE TABLE IF NOT EXISTS "violation" (
   "hazsub4" TEXT,
   "hazsub5" TEXT,
   "load_dt" TEXT NOT NULL
-);
+);;--
 
 CREATE TABLE IF NOT EXISTS "violation_event" (
-  "activity_nr" INTEGER NOT NULL,
+  "activity_nr" TEXT NOT NULL,
   "citation_id" TEXT NOT NULL,
   "pen_fta" TEXT,
   "hist_event" TEXT,
@@ -164,14 +164,14 @@ CREATE TABLE IF NOT EXISTS "violation_event" (
   "hist_penalty" REAL,
   "hist_abate_date" TEXT,
   "hist_vtype" TEXT,
-  "hist_insp_nr" INTEGER,
+  "hist_insp_nr" TEXT,
   "load_dt" TEXT NOT NULL
-);
+);;--
 
 CREATE TABLE IF NOT EXISTS "violation_gen_duty_std" (
-  "activity_nr" INTEGER NOT NULL,
+  "activity_nr" TEXT NOT NULL,
   "citation_id" TEXT NOT NULL,
-  "line_nr" INTEGER NOT NULL,
+  "line_nr" TEXT NOT NULL,
   "line_text" TEXT,
   "load_dt" TEXT NOT NULL
-);
+);;--

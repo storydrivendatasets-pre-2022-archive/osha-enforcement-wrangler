@@ -30,8 +30,8 @@ INSERT INTO target_db.violation(
   , "load_dt"
 )
 SELECT
-  "activity_nr"
-  , "citation_id"
+  LEFT_ZERO_PAD("activity_nr", 9) AS "activity_nr"
+  , LEFT_ZERO_PAD("citation_id", 7) AS "citation_id"
   , CONVERT_XYN_BOOLEAN("delete_flag")
   , "standard"
   , "viol_type"

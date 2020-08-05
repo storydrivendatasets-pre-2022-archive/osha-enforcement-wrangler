@@ -28,21 +28,45 @@ def load_custom_functions(connection):
         else:
             raise ValueError(f"Unexpected value: `{val}`")
 
+    def _left_zero_pad(val, num):
+        if type(val) is str:
+            return val.rjust(num, '0')
+        else:
+            return val
+
+    def _normalize_text(val):
+        """
+        Expectations:
+            val is a string value or None; blank strings are *not* expected
+        """
+        if val is None:
+            return None
+        elif type(val) is not str:
+            raise ValueError(f"Got value `{val}` of type `{type(val)}`; only expecting strings")
+        else:
+            return re.sub(' +', ' ', val).strip().upper()
+
     connection.createscalarfunction("convert_xyn_boolean", _convert_xyn_boolean, 1)
+    connection.createscalarfunction("left_zero_pad", _left_zero_pad, 2)
+    connection.createscalarfunction("normalize_text", _normalize_text, 1)
     return connection
 
 def inserts(connection):
     def _get_paths():
+#        return [s for s in sorted(INSERTS_DIR.glob('*.sql')) if s.name in ('insert_inspection.sql',)]
         return sorted(INSERTS_DIR.glob('*.sql'))
 
     cursor = connection.cursor()
     cursor.execute(f"ATTACH DATABASE '{SRC_DB_PATH}' AS src_db;")
     cursor.execute(f"ATTACH DATABASE '{TARGET_DB_PATH}' AS target_db;")
 
-    for i, insertpath in enumerate(_get_paths()):
+    srcpaths = _get_paths()
+    myinfo(f"{len(srcpaths)} INSERT SQL scripts", label="File count")
+
+    for i, insertpath in enumerate(srcpaths):
         tname = re.match(r'insert_(\w+)', insertpath.stem).groups()[0]
         targettbl = f"target_db.{tname}"
-        mylog(f"{i}. {targettbl}", insertpath, label="Running insert")
+        mylog(f"#{i+1} {targettbl}", insertpath, label="Running insert")
         stmt = insertpath.read_text()
         cursor.execute(stmt)
 

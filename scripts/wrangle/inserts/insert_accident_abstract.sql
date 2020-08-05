@@ -12,10 +12,10 @@ WITH orderedtbl AS (
         , line_nr ASC
 )
 SELECT
-    summary_nr
-    , COUNT(1) as line_count
-    , GROUP_CONCAT(abstract_text, '') AS abstract_text
-    , SUBSTR(MAX(load_dt), 1, 10) AS load_dt
+      LEFT_ZERO_PAD("summary_nr", 9) AS "summary_nr"
+    , COUNT(1) AS "line_count"
+    , NORMALIZE_TEXT(GROUP_CONCAT("abstract_text", '')) AS "abstract_text"
+    , SUBSTR(MAX("load_dt"), 1, 10) AS "load_dt"
 FROM orderedtbl
 GROUP BY summary_nr
 ;

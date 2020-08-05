@@ -25,17 +25,23 @@ def insert_from_csv(connection, src_path):
     NULL_ROW_COUNT = 0
 
     def _convert_blank_to_null(iterdata):
+        """
+        every cell is expected to be a string
+        """
         nonlocal NULL_CELL_COUNT
         nonlocal NULL_ROW_COUNT
         for row in iterdata:
             _row_nulled = False
-            for i, val in enumerate(row):
-                if val.strip() == '':
+            for i, v in enumerate(row):
+                val = v.strip()
+                if not val:
                     row[i] = None
                     NULL_CELL_COUNT += 1
                     if _row_nulled is False:
                         _row_nulled = True
                         NULL_ROW_COUNT += 1
+                else:
+                    row[i] = val
             yield row
 
     def _get_insert_statement(tablename, fields):

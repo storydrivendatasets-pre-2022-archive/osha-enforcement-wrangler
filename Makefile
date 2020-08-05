@@ -18,7 +18,7 @@ wrangle_db: clean_wrangled_db ${WRANGLED_DB_PATH} index_wrangled_db
 
 
 ${WRANGLED_DB_PATH}: ${COMPILED_DB_PATH}
-	./scripts/wrangle/sqlize_wrangled.py
+	./scripts/wrangle/insert_wrangled.py
 
 ## compile phase
 

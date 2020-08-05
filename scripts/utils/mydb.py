@@ -4,6 +4,8 @@ import re
 from sys import path as syspath; syspath.append('./scripts')
 from utils.mylog import *
 
+
+CREATE_TABLE_DELIMITER = ';;--'
 def connect_to_db(db_path):
     dp = Path(db_path).expanduser().as_posix()
     return apsw.Connection(dp)
@@ -16,15 +18,21 @@ def create_tables(connection, schema_path):
         Returns a dict, with table names as keys, create statements as values
         """
         d = {}
-        for t in txt.strip(' ;\n').split(';'):
+        create_stmts = [s.strip('\n ') for s in txt.split(CREATE_TABLE_DELIMITER)]
+        create_stmts = [s for s in create_stmts if s]
+
+        for t in create_stmts:
             stmt = t.strip()
             tbl = re.search(r'CREATE TABLE[^"]*?"([^"]+)" *\(', stmt).groups()[0]
             d[tbl] = stmt
         return d
 
     txt = schema_path.read_text()
+    statements = _parse_statements(txt)
 
-    for tbl, stmt in _parse_statements(txt).items():
+    myinfo(f"Read {len(statements.keys())} create table statements")
+
+    for tbl, stmt in statements.items():
         mylog(f'CREATE TABLE "{tbl}"...')
         connection.cursor().execute(stmt)
 

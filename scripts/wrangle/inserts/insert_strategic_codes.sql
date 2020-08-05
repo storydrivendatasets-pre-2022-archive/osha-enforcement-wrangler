@@ -5,7 +5,7 @@ INSERT INTO target_db.strategic_codes(
 --  , "load_dt"
 )
 SELECT
-    "activity_nr"
+      LEFT_ZERO_PAD("activity_nr", 9) AS "activity_nr"
     , "prog_type"
     , "prog_value"
 --    , SUBSTR(load_dt, 1, 10)

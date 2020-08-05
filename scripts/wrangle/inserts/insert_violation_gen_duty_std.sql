@@ -19,13 +19,13 @@ ORDER BY
 )
 
 SELECT
-      "activity_nr"
-      , "citation_id"
-      , GROUP_CONCAT("line_text", '') AS "line_text"
+      LEFT_ZERO_PAD("activity_nr", 9) AS "activity_nr"
+      , LEFT_ZERO_PAD("citation_id", 7) AS "citation_id"
+      , NORMALIZE_TEXT(GROUP_CONCAT("line_text", '')) AS "line_text"
       , COUNT(1) AS "line_count"
-      , MIN("starting_line") AS "start_line_nr"
+      , MIN("line_nr") AS "start_line_nr"
       , MAX("line_nr") AS "end_line_nr"
-      , SUBSTR(MAX(load_dt), 1, 10)
+      , SUBSTR(MAX("load_dt"), 1, 10)
 
 FROM ordered
 GROUP BY

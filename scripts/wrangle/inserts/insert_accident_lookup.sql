@@ -8,7 +8,7 @@ INSERT INTO target_db.accident_lookup(
 SELECT
     "accident_code"
     , "accident_number"
-    , "accident_value"
+    , NORMALIZE_TEXT("accident_value") as "accident_value"
     , "accident_letter"
 --    , SUBSTR(load_date, 1, 10)
 

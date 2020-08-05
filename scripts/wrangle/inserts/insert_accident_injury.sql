@@ -20,8 +20,8 @@ INSERT INTO target_db.accident_injury(
 --    , "load_dt"
 )
 SELECT
-    "summary_nr"
-    , "rel_insp_nr"
+      LEFT_ZERO_PAD("summary_nr", 9) AS "summary_nr"
+    , LEFT_ZERO_PAD("rel_insp_nr", 9) AS "rel_insp_nr"
     , "age"
     , "sex"
     , "nature_of_inj"

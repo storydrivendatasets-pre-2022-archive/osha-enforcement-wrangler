@@ -5,7 +5,7 @@ INSERT INTO target_db.optional_info(
 --  ,"load_dt"
 )
 SELECT
-  "activity_nr"
+  LEFT_ZERO_PAD("activity_nr", 9) AS "activity_nr"
   , "opt_id"
   , "opt_value"
 --  , SUBSTR(load_dt, 1, 10)

@@ -8,6 +8,7 @@ Each subhed notes things that have to be changed for the `wrangled_schema.sql`
 
 - always null: abstract_text, event_time, state_flag
 - event_date trim seconds value
+- boolean: fatality
 
 ### accident_abstract
 - connects to accident via summary_nr
@@ -22,7 +23,7 @@ Each subhed notes things that have to be changed for the `wrangled_schema.sql`
 
 ### inspection
 - always null: state_flag
-- bool ('X' vs BLANK): safety_manuf,safety_const,safety_marit,safety_manuf,health_const,health_marit,migrant
+- bool ('X' vs BLANK): safety_manuf,safety_const,safety_marit,safety_manuf,health_const,health_marit,migrant, fatality
 - bool Y/N/NULL: adv_notice
 - load_dt: ld_dt
 
