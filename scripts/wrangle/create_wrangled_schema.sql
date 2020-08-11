@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS "accident" (
 
 
 CREATE TABLE IF NOT EXISTS "accident_abstract" (
-  "summary_nr" CHAR(9) NOT NULL,
+  "summary_nr" CHAR(9) PRIMARY KEY,
 -- obsolete  "line_nr" INTEGER NOT NULL,
   "line_count" INTEGER NOT NULL, -- result of group count
   "abstract_text" TEXT,
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS "accident_lookup" (
 
 
 CREATE TABLE IF NOT EXISTS "inspection" (
-  "activity_nr" CHAR(9) NOT NULL,                     -- Unique identifier for the inspection
+  "activity_nr" CHAR(9) PRIMARY KEY,                     -- Unique identifier for the inspection
   "reporting_id" CHAR(7) NOT NULL,                    -- Identifies the OSHA federal or state reporting jurisdiction
 -- always NULL  "state_flag" INTEGER,
   "estab_name" VARCHAR(200),                          -- Establishment being inspected
@@ -154,7 +154,10 @@ CREATE TABLE IF NOT EXISTS "violation" (
   "hazsub3" CHAR(4),
   "hazsub4" CHAR(4),
   "hazsub5" CHAR(4),
-  "load_dt" DATE NOT NULL
+  "load_dt" DATE NOT NULL,
+  PRIMARY KEY(activity_nr, citation_id)
+
+
 );;--
 
 CREATE TABLE IF NOT EXISTS "violation_event" (
@@ -178,5 +181,8 @@ CREATE TABLE IF NOT EXISTS "violation_gen_duty_std" (
   "line_count" SMALLINT NOT NULL, -- derived from group count
   "start_line_nr" SMALLINT NOT NULL,
   "end_line_nr" SMALLINT NOT NULL,
-  "load_dt" DATE NOT NULL
+  "load_dt" DATE NOT NULL,
+  PRIMARY KEY(activity_nr, citation_id)
+
+
 );;--

@@ -2,6 +2,15 @@
 # TODOS
 
 
+## Current status
+
+- Wrangled DB is properly indexed
+- should investigate individual records, come up with story queries
+- factor out stash step for separate datastash repo
+
+## General
+
+- [ ] write a new logger
 
 ## Wrangling
 
@@ -9,7 +18,7 @@
 
 - Indexing
     - [tk] Index all tables in wrangled
-    - [ ] Add primary key
+    - [X] Add primary key
     - [ ] Add foreign key
 
 - zeropadding

@@ -31,7 +31,6 @@ FROM ordered
 GROUP BY
     activity_nr
     , citation_id
-    , line_nr
 ;
 
 

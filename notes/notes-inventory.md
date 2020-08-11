@@ -157,3 +157,14 @@ SELECT COUNT(1) FROM codes;
 ### Questions
 
 - Why does `viol_type` have undocumented values of  U,F,P,H
+
+
+
+## violation
+
+```sql
+# number of activity_nr
+SELECT COUNT(DISTINCT activity_nr)
+FROM violation_gen_duty_std;
+# 44783
+```

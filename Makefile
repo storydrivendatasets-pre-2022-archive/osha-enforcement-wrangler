@@ -13,6 +13,12 @@ ALL: collect compile_db wrangle_db
 WRANGLED_DB_PATH = 	data/wrangled/osha_wrangled.sqlite
 COMPILED_DB_PATH = data/compiled/osha_compiled.sqlite
 
+
+##
+inventory:
+	./scripts/utils/db_inventory.py ${WRANGLED_DB_PATH}
+
+
 ## wrangle phase
 wrangle_db: clean_wrangled_db ${WRANGLED_DB_PATH} index_wrangled_db
 

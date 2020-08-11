@@ -92,6 +92,66 @@ ORDER BY
 ;
 
 
-
-
 ```
+
+
+
+## More recursive fun
+
+```sql
+SELECT 
+    seqno AS idx_seqno
+    , cid AS idx_cid
+    , name AS idx_name
+FROM 
+    PRAGMA_INDEX_INFO("accident")
+```
+
+```sql
+SELECT 
+    name AS col_name
+FROM
+    PRAGMA_INDEX_LIST("accident")
+```
+
+```sql
+
+
+WITH tx AS (
+    SELECT 
+        name AS table_name 
+    FROM sqlite_master WHERE type='table'
+    ORDER BY table_name ASC
+), rx AS (
+    SELECT
+        tx.table_name
+        , pg.name AS index_name
+    FROM tx
+    INNER JOIN    
+        PRAGMA_INDEX_LIST(tx.table_name) AS pg
+), ry AS (
+    SELECT rx.table_name
+        , rx.index_name
+        , pg.cid
+        , pg.seqno
+        , pg.name AS col_name
+    FROM rx
+    INNER JOIN        
+        PRAGMA_INDEX_INFO(rx.index_name) AS pg    
+    ORDER BY 
+        table_name ASC 
+        , cid ASC
+        , seqno ASC
+)
+SELECT
+    table_name
+    , index_name
+    , GROUP_CONCAT(col_name, '|') AS indexcols
+FROM ry
+GROUP BY 
+    table_name
+    , index_name
+;
+```
+
+

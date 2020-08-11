@@ -16,6 +16,7 @@ import requests
 import re
 from lxml.html import fromstring as lxsoup
 from urllib.parse import urlparse
+from tqdm import tqdm
 
 CATALOG_URL = 'https://enforcedata.dol.gov/views/data_summary.php'
 TARGET_DIR = SNAPSHOTS_DATA_DIR
