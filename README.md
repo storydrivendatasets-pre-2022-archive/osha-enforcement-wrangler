@@ -7,7 +7,10 @@ https://enforcedata.dol.gov/views/data_summary.php ([mirror](https://enforcedata
 
 And compiles and wrangles into a handy SQLite database
 
-## Fetch and compile the data with this repo
+
+
+
+## How to fetch and compile the data with this repo
 
 ```sh
 # make a work directory of your choice
@@ -34,6 +37,10 @@ make compile
 make wrangle
 ```
 
+## Walkthroughs
+
+- [DRAFT: Looking at an injury accident investigation](walkthroughs/single-accident-inspection/index.md) on the OSHA online web database and in SQL exploration of `data/wrangled/osha_wrangled.sqlite`
+
 
 ## Helpful references
 
@@ -42,4 +49,5 @@ make wrangle
 
 OSHA reference for accident/violation/inspection definitions:
 https://www.osha.gov/data/inspection-detail-definitions#tab2
+
 
