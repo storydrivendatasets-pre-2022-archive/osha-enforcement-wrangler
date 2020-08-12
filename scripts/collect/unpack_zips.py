@@ -13,7 +13,9 @@ unzipped as: 'osha_violation_event_2.csv'
 
 
 """
-from sys import path as syspath; syspath.append('./scripts')
+from sys import path as syspath
+
+syspath.append("./scripts")
 from utils.myfiler import existed_size, get_latest_snapshot_dir
 from utils.mylog import *
 
@@ -23,27 +25,21 @@ from sys import argv
 from zipfile import ZipFile
 
 
-
-
 def main(srcdir, destdir):
-
     def _dest_name(fname):
-        rx = re.search(r'(.+?)(\d+)\.(\w+)$', fname)
+        rx = re.search(r"(.+?)(\d+)\.(\w+)$", fname)
         if rx:
             rx = rx.groups()
             # we need to rename/renumber the file for its destpath
-            fname = '{}-{}.{}'.format(rx[0], rx[1].rjust(3, '0'), rx[2])
+            fname = "{}-{}.{}".format(rx[0], rx[1].rjust(3, "0"), rx[2])
         return fname
 
-
-
-    zipnames = sorted(list(srcdir.glob('*.zip')))
+    zipnames = sorted(list(srcdir.glob("*.zip")))
     myinfo(f"Found {len(zipnames)} zipfiles")
-
 
     for zn in zipnames:
         # we actually make a subdir for each zip file
-        _zsub = re.search(r'(\w+)_\d{8}', zn.stem).groups()[0]
+        _zsub = re.search(r"(\w+)_\d{8}", zn.stem).groups()[0]
         zdir = destdir.joinpath(_zsub)
         zdir.mkdir(exist_ok=True, parents=True)
 
@@ -55,13 +51,17 @@ def main(srcdir, destdir):
             fname = _dest_name(zname) if len(zfile.filelist) > 1 else zname
             destpath = zdir.joinpath(fname)
             destpath.write_bytes(zfile.read(zname))
-            mylog(destpath.name, destpath.parent, f"{existed_size(destpath)} bytes", label="Extracted")
+            mylog(
+                destpath.name,
+                destpath.parent,
+                f"{existed_size(destpath)} bytes",
+                label="Extracted",
+            )
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     if len(argv) < 2:
-        srcdir = get_latest_snapshot_dir().joinpath('zips')
+        srcdir = get_latest_snapshot_dir().joinpath("zips")
     else:
         srcdir = Path(argv[1])
         if not srcdir.is_dir():
@@ -69,7 +69,7 @@ if __name__ == '__main__':
 
     myinfo(srcdir, label="Source dir")
 
-    targetdir = srcdir.parent.joinpath('unpacked')
+    targetdir = srcdir.parent.joinpath("unpacked")
     myinfo(targetdir, label="Unpacked destination")
 
     main(srcdir, targetdir)
