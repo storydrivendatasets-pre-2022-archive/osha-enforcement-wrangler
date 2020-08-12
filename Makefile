@@ -31,13 +31,9 @@ ${WRANGLED_DB_PATH}: ${COMPILED_DB_PATH}
 compile_db: clean_compiled_db ${COMPILED_DB_PATH} index_compiled_db
 
 ${COMPILED_DB_PATH}:
-	./scripts/compile/sqlize_compiled.py
+	@echo hello $(SRC_DIR)
+	./scripts/compile/sqlize_compiled.py $(SRC_DIR)
 
-
-
-# data/compiled/raw/: data/collected/stash/
-# 	# compile_stash
-# 	./scripts/compile/collate_raw_stashes.py $<
 
 
 

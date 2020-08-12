@@ -112,7 +112,7 @@ def main(src_dir):
             d[q].append(p)
         return d
 
-
+    TARGET_DB_PATH.parent.mkdir(exist_ok=True, parents=True)
     mylog(TARGET_DB_PATH, label="Connecting to")
     conn = connect_to_db(TARGET_DB_PATH)
 
