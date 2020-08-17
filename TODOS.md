@@ -1,16 +1,23 @@
 
 # TODOS
 
+## Priority 
+
+- [ ] Find/derive lookup table for accident codes...
+    - [ ]
 
 ## Current status
 
-- Wrangled DB is properly indexed
+- [ ] Inspection and accident activity_nr AND summary_nr do not match up at all with webpage???: https://www.osha.gov/pls/imis/establishment.inspection_detail?id=1458614.015
+- [ ] Maybe re-insert accident_abstract to do group concat with space char instead of no char?
+- [X] Wrangled DB is properly indexed
+- [X] factor out stash step for separate datastash repo
+
 - should investigate individual records, come up with story queries
-- factor out stash step for separate datastash repo
 
 ## General
 
-- [ ] write a new logger
+- [?] write a new logger
 
 ## Wrangling
 

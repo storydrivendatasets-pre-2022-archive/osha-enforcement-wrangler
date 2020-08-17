@@ -25,3 +25,8 @@ Here's a listing of accidents in descending order of `Event Date`:
 <a href="https://www.osha.gov/pls/imis/AccidentSearch.search">
     <img src="assets/images/osha-accident-search-results.png" alt="osha-accident-search-results.png">
 </a>
+
+
+OSHA establishment search:
+
+https://www.osha.gov/pls/imis/establishment.html

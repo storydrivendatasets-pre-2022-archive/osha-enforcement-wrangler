@@ -1,3 +1,28 @@
+### The data attributes of Inspection 1458614.015
+
+As derived from the [inspection detail page #1458614.015](https://www.osha.gov/pls/imis/establishment.inspection_detail?id=1458614.015)
+
+|  Web attribute  |    Value    |
+|-----------------|-------------|
+| activity_nr     | 1458614.015 |
+| report_id       | 0418200     |
+| open_date       | 2020-01-29  |
+| Union Status    | NonUnion    |
+| inspection_type | Referral    |
+|                 |             |
+
+
+As derived from the `inspection` table, though:
+
+```sql
+SELECT * FROM inspection WHERE site_address like "1661 Whittle%"
+```
+
+
+
+
+
+
 ### The data attributes of Accident #123478.015
 
 
@@ -5,23 +30,25 @@
 
 As derived from the [accident detail page](https://www.osha.gov/pls/imis/accidentsearch.accident_detail?id=123478.015)
 
-| Attribute  |                        Value                        |
-|------------|-----------------------------------------------------|
-| summary_nr | 123478.015                                          |
-| report_id  | 0418200                                             |
-| event_date | 2020-01-22 15:30                                    |
-| keywords   | pelvis, fracture, lost balance, finger, ankle, fall |
-| event_desc | Employee Falls From Automotive Lift And Sustains... |
-|            |                                                     |
+
+
+| Web attribute |                        Value                        |
+|---------------|-----------------------------------------------------|
+| summary_nr    | 123478.015                                          |
+| report_id     | 0418200                                             |
+| event_date    | 2020-01-22 15:30                                    |
+| keywords      | pelvis, fracture, lost balance, finger, ankle, fall |
+| event_desc    | Employee Falls From Automotive Lift And Sustains... |
+|               |                                                     |
 
 
 Unfortunately, nothing on the web view of the accident detail corresponds to the `summary_nr` of the record in the `accident` table:
 
-|     header    |                            value                             |
-|---------------|--------------------------------------------------------------|
-| ﻿summary_nr    | 221234784                                                    |
-| reporting_id  | 0418200                                                       |
-| event_date    | 2020-01-22 15:01                                                 |
+| header        | value                                                        |
+| ------------- | ------------------------------------------------------------ |
+| summary_nr    | 221234784                                                    |
+| reporting_id  | 0418200                                                      |
+| event_date    | 2020-01-22 03:01                                             |
 | event_desc    | EMPLOYEE FALLS FROM AUTOMOTIVE LIFT AND SUSTAINS MULTIPLE FR |
 | event_keyword | PELVIS,LOST BALANCE,FRACTURE,ANKLE,FALL,FINGER               |
 | const_end_use |                                                              |
@@ -31,6 +58,47 @@ Unfortunately, nothing on the web view of the accident detail corresponds to the
 | project_type  |                                                              |
 | sic_list      |                                                              |
 | fatality      | 0                                                            |
-| load_dt       | 8/10/20                                                      |
+| load_dt       | 2020-08-10                                                   |
 
 
+From the `accident_injury` table:
+
+```sql
+SELECT * FROM accident_injury WHERE summary_nr = '221234784'
+```
+
+| fieldname      | value     |
+| -------------- | --------- |
+| summary_nr     | 221234784 |
+| rel_insp_nr    | 344586144 |
+| age            | 0         |
+| sex            |           |
+| nature_of_inj  | 3         |
+| part_of_body   | 14        |
+| src_of_injury  | 43        |
+| event_type     | 5         |
+| evn_factor     | 13        |
+| hum_factor     | 6         |
+| occ_code       | 889       |
+| degree_of_inj  | 2         |
+| task_assigned  | 2         |
+| hazsub         |           |
+| const_op       |           |
+| const_op_cause |           |
+| fat_cause      |           |
+| fall_ht        |           |
+
+
+From `related_activity`
+
+```sql
+SELECT * FROM related_activity WHERE activity_nr = '344586144'
+```
+
+| fieldname   | value     |
+| ----------- | --------- |
+| activity_nr | 344586144 |
+| rel_type    | R         |
+| rel_act_nr  | 001536836 |
+| rel_safety  | 1         |
+| rel_health  | 0         |
