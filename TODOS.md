@@ -4,16 +4,31 @@
 ## Priority 
 
 - [ ] Find/derive lookup table for accident codes...
-    - [ ]
+    - [ ] violation-`standard` https://www.osha.gov/laws-regs/regulations/standardnumber
+- [ ] Inspection and accident activity_nr AND summary_nr do not match up at all with webpage???: https://www.osha.gov/pls/imis/establishment.inspection_detail?id=1458614.015
 
 ## Current status
 
-- [ ] Inspection and accident activity_nr AND summary_nr do not match up at all with webpage???: https://www.osha.gov/pls/imis/establishment.inspection_detail?id=1458614.015
-- [ ] Maybe re-insert accident_abstract to do group concat with space char instead of no char?
-- [X] Wrangled DB is properly indexed
-- [X] factor out stash step for separate datastash repo
 
 - should investigate individual records, come up with story queries
+- [ ] haven't decided if i should use virtual tables/ft5 for full text search on accident_abstract and violation_gen_duty_std
+        ```sql
+        -- CREATE VIRTUAL TABLE IF NOT EXISTS "accident_abstract_vt" USING fts5 (
+        --   "summary_nr",
+        --   "line_count",
+        --   "abstract_text",
+        --   "load_dt"
+        -- );
+        ```
+
+
+## most recently done
+
+- [x] added collate nocase to table creation statements
+- [X] Wrangled DB is properly indexed
+- [X] factor out stash step for separate datastash repo
+- [x] Maybe re-insert accident_abstract to do group concat with space char instead of no char?
+
 
 ## General
 

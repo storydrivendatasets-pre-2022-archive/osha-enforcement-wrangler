@@ -18,6 +18,44 @@ As derived from the `inspection` table, though:
 SELECT * FROM inspection WHERE site_address like "1661 Whittle%"
 ```
 
+| fieldname       | value                           |
+| --------------- | ------------------------------- |
+| activity_nr     | 344586144                       |
+| reporting_id    | 0418200                         |
+| estab_name      | GROUP 1 AUTOMOTIVE, INC.        |
+| site_address    | 1661 WHITTLESEY RD.             |
+| site_city       | COLUMBUS                        |
+| site_state      | GA                              |
+| site_zip        | 31904                           |
+| owner_type      | A                               |
+| owner_code      |                                 |
+| adv_notice      | 0                               |
+| safety_hlth     | S                               |
+| sic_code        |                                 |
+| naics_code      | 441110                          |
+| insp_type       | C                               |
+| insp_scope      | B                               |
+| why_no_insp     | I                               |
+| union_status    | B                               |
+| safety_manuf    | 0                               |
+| safety_const    | 0                               |
+| safety_marit    | 0                               |
+| health_manuf    | 0                               |
+| health_const    | 0                               |
+| health_marit    | 0                               |
+| migrant         | 0                               |
+| mail_street     | 5800 PEACHTREE INDUSTRIAL BLVD. |
+| mail_city       | ATLANTA                         |
+| mail_state      | GA                              |
+| mail_zip        | 30341                           |
+| host_est_key    | HOST_EST_KEY_VALUE              |
+| nr_in_estab     | 63                              |
+| open_date       | 2020-01-29                      |
+| case_mod_date   | 2020-08-09                      |
+| close_conf_date | 2020-01-29                      |
+| close_case_date |                                 |
+| load_dt         | 2020-08-10                      |
+
 
 
 
@@ -102,3 +140,11 @@ SELECT * FROM related_activity WHERE activity_nr = '344586144'
 | rel_act_nr  | 001536836 |
 | rel_safety  | 1         |
 | rel_health  | 0         |
+
+
+
+### The data attributes of violation #1458614.015 and 1458614.015 01001
+
+
+
+ 

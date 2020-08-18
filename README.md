@@ -1,4 +1,4 @@
-# OSHA Enforcement Data Catalog snapshotter
+# OSHA Enforcement Data Catalog wrangler
 
 
 Downloads all the CSVs found here:
