@@ -3,6 +3,12 @@
 
 ## Priority 
 
+2020-08-19:
+- tried to hack more at OSHA data structure and its website. See 180-accident-injury-sql-together.md
+- I'm stuck on this accident summary/investigation: https://www.osha.gov/pls/imis/establishment.inspection_detail?id=1437294.015
+    - has summary NR of 121039.015
+    - But in the database, the corresponding accident has summary_nr of: 221210396 
+
 - [ ] Find/derive lookup table for accident codes...
     - [ ] violation-`standard` https://www.osha.gov/laws-regs/regulations/standardnumber
 - [ ] Inspection and accident activity_nr AND summary_nr do not match up at all with webpage???: https://www.osha.gov/pls/imis/establishment.inspection_detail?id=1458614.015
