@@ -3,11 +3,22 @@
 
 ## Priority 
 
-2020-08-19:
-- tried to hack more at OSHA data structure and its website. See 180-accident-injury-sql-together.md
-- I'm stuck on this accident summary/investigation: https://www.osha.gov/pls/imis/establishment.inspection_detail?id=1437294.015
-    - has summary NR of 121039.015
-    - But in the database, the corresponding accident has summary_nr of: 221210396 
+- Need to read up on investigation process and find OSHA form 170:
+    - 2005 history: https://www.osha.gov/enforcement/directives/cpl-02-00-137
+    - https://www.osha.gov/report.html
+    - https://www.osha.gov/pls/ser/serform.html Form No. OSHA 6-40.1.
+
+- Read data definitions
+
+    - inspection_detail: information: https://www.osha.gov/data/inspection-detail-definitions#tab1
+    - inspection_detail: violation: https://www.osha.gov/data/inspection-detail-definitions#tab2
+    - inspection_detail: accident https://www.osha.gov/data/inspection-detail-definitions#tab3
+        - accident is more akin to "accident_investigation"
+        - `summary_nr` may be a unique id for database purposes: 
+     
+            > Provides an unique identifier for the accident investigation. This investigation may be linked to several inspections, e.g., if there were multiple contractors at a construction site.
+
+
 
 - [ ] Find/derive lookup table for accident codes...
     - [ ] violation-`standard` https://www.osha.gov/laws-regs/regulations/standardnumber
@@ -16,7 +27,21 @@
 ## Current status
 
 
-- should investigate individual records, come up with story queries
+2020-08-19 reading/notes:
+- maybe it helps if I think about the `accident` table as **investigation**, with a wholly unique `summary_nr` unconnected to ID numbers in the inspection table
+    - an investigation can have multiple inspections
+- maybe there is no connection between web app data IDs and the data?
+
+2020-08-19 work:
+- tried to hack more at OSHA data structure and its website. See 180-accident-injury-sql-together.md
+- I'm stuck on this accident summary/investigation: https://www.osha.gov/pls/imis/establishment.inspection_detail?id=1437294.015
+    - has summary NR of 121039.015
+    - But in the database, the corresponding accident has summary_nr of: 221210396 
+
+
+
+
+- should investigate individual records, come up with story queries (am struggling with this)
 - [ ] haven't decided if i should use virtual tables/ft5 for full text search on accident_abstract and violation_gen_duty_std
         ```sql
         -- CREATE VIRTUAL TABLE IF NOT EXISTS "accident_abstract_vt" USING fts5 (
